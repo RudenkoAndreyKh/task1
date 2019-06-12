@@ -1,30 +1,41 @@
 <div class="col-sm-4 authPage">
   <h1>{{title}}</h1>
   <a routerLink="/">Main Page</a>
-  <form (submit)="addNewUser();">
+  <form [formGroup]="registerForm" (submit)="addNewUser();">
     <div class="form-group">
       <label>First Name</label>
-      <input required [formControl]="firstName" type="text" class="form-control"
-        placeholder="type your first name here...">
+      <input formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" type="text"
+        class="form-control" placeholder="type your first name here...">
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+      </div>
     </div>
     <div class="form-group">
       <label>Second Name</label>
-      <input [formControl]="lastName" type="text" class="form-control" placeholder="type your second name here...">
+      <input formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" type="text"
+        class="form-control" placeholder="type your second name here...">
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+      </div>
     </div>
     <div class="form-group">
       <label for="exampleInputEmail1">Email address</label>
-      <input [formControl]="email" type="email" class="form-control" id="exampleInputEmail1"
+      <input formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" type="email" class="form-control" id="exampleInputEmail1"
         aria-describedby="emailHelp" placeholder="type your email here...">
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+        <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+      </div>
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <div class="form-group">
       <label for="exampleInputPassword1">Password</label>
-      <input [formControl]="password" type="password" class="form-control" id="exampleInputPassword1"
+      <input formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" class="form-control" id="exampleInputPassword1"
         placeholder="type your password here...">
-    </div>
-    <div class="form-group form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
