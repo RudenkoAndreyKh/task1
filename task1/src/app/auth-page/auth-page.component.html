@@ -1,0 +1,34 @@
+<div class="col-sm-4 authPage">
+  <h1>{{title}}</h1>
+  <a routerLink="/">Main Page</a>
+  <form (submit)="addNewUser();">
+    <div class="form-group">
+      <label>First Name</label>
+      <input required [formControl]="firstName" type="text" class="form-control"
+        placeholder="type your first name here...">
+    </div>
+    <div class="form-group">
+      <label>Second Name</label>
+      <input [formControl]="lastName" type="text" class="form-control" placeholder="type your second name here...">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input [formControl]="email" type="email" class="form-control" id="exampleInputEmail1"
+        aria-describedby="emailHelp" placeholder="type your email here...">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input [formControl]="password" type="password" class="form-control" id="exampleInputPassword1"
+        placeholder="type your password here...">
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+<router-outlet></router-outlet>
