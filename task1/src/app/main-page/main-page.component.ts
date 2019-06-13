@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthServiceService } from '../services/auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -6,10 +8,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
+  Auth:AuthServiceService;
+  isLoggedIn = false;
+  constructor(private router:Router) {
+    this.Auth = new AuthServiceService();
+  }
 
-  constructor() { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    await this.Auth.isLoggedIn().then(res => {
+      this.isLoggedIn = res;
+    })
+    if (!this.isLoggedIn) {
+      this.router.navigate(['login']);
+    }
   }
 
 }
