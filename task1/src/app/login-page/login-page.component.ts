@@ -14,14 +14,12 @@ import { HeaderService } from '../services/header-service';
 })
 export class LoginPageComponent implements OnInit {
   title = "Login page"
-  Auth: AuthServiceService;
   public userModel: User;
   loginForm: FormGroup;
   submitted = false;
   isLoggedIn = false;
 
-  constructor(private router: Router, private userInfoService :UserInfoService, private headerService: HeaderService) {
-    this.Auth = new AuthServiceService();
+  constructor(private router: Router, private userInfoService :UserInfoService, private headerService: HeaderService, private Auth: AuthServiceService) {
   }
 
   async ngOnInit() {
@@ -44,11 +42,9 @@ export class LoginPageComponent implements OnInit {
 
       if (this.isLoggedIn) {
         let user = <User>{ email: this.loginForm.value.email, password: this.loginForm.value.password };
-       
-        this.router.navigate(['']).then(() => {
-          this.userInfoService.announcedUserInfo(user);
-          this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-        })
+        this.userInfoService.announcedUserInfo(user);
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+        this.router.navigate(['']);
        
       };
     });

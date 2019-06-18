@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTable } from '@angular/material';
 import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { AuthServiceService } from '../services/auth-service.service';
+import axios from 'axios';
 
 @Component({
   selector: 'app-data-table',
@@ -13,14 +14,26 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatTable, { static: false }) table: MatTable<DataTableItem>;
   dataSource: DataTableDataSource;
-  Auth: AuthServiceService;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'firstName', 'lastName', 'email', 'actions'];
 
-  ngOnInit() {
+  constructor(private Auth: AuthServiceService){
     this.dataSource = new DataTableDataSource();
-    this.Auth = new AuthServiceService();
+  }
+
+  ngOnInit() {
+    axios.get('http://localhost:3000/users')
+    .then(res => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.data = res.data;
+
+
+      this.table.dataSource = this.dataSource;
+    })
+    
+    //this.table.dataSource = this.dataSource;
   }
 
   deleteUser(userId) {
@@ -33,8 +46,6 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    
   }
 }

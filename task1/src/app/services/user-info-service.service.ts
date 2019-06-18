@@ -11,6 +11,6 @@ export class UserInfoService{
     userInfoAnnounced$ = this.userInfoAnnouncedSource;
 
     announcedUserInfo(userModel:User){
-        this.userInfoAnnouncedSource.next(userModel)
+        this.userInfoAnnouncedSource.next(userModel);
     }
 } 

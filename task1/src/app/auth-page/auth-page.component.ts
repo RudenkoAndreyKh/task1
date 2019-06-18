@@ -12,8 +12,6 @@ import { Router } from '@angular/router';
 export class AuthPageComponent implements OnInit {
   title = 'Auth Page';
 
-  Auth: AuthServiceService;
-
   registerForm: FormGroup;
   submitted = false;
 
@@ -21,8 +19,7 @@ export class AuthPageComponent implements OnInit {
 
   public userModel: User;
 
-  constructor(private router: Router) {
-    this.Auth = new AuthServiceService();
+  constructor(private router: Router, private Auth: AuthServiceService) {
   }
 
   async ngOnInit() {

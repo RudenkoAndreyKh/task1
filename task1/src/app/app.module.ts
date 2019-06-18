@@ -14,9 +14,14 @@ import { HeaderComponent } from './header/header.component';
 import { UserInfoService } from './services/user-info-service.service';
 import { StoreListComponent } from './store-list/store-list.component';
 import { DataTableComponent } from './data-table/data-table.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule, MatDialog, MatDialogModule, MatButtonModule, MatMenuModule, MatCardModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatDialog, MatDialogModule, MatButtonModule, MatMenuModule, MatCardModule, MatToolbarModule, MatIconModule, MatInputModule } from '@angular/material';
 import { ItemsDataTableComponent } from './items-data-table/items-data-table.component';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
+import { AuthServiceService } from './services/auth-service.service';
+import { HttpRequestService } from './services/http-request.service';
+import { CreateNewItemModalComponent } from './create-new-item-modal/create-new-item-modal.component';
+import { DescriptionSizePipe } from './pipes/descriptio-size.pipe';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
   declarations: [
@@ -29,7 +34,9 @@ import { EditModalComponent } from './edit-modal/edit-modal.component';
     StoreListComponent,
     DataTableComponent,
     ItemsDataTableComponent,
-    EditModalComponent
+    EditModalComponent,
+    CreateNewItemModalComponent,
+    DescriptionSizePipe
   ],
   imports: [
     BrowserModule,
@@ -45,10 +52,12 @@ import { EditModalComponent } from './edit-modal/edit-modal.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    AngularFontAwesomeModule
   ],
-  providers: [UserInfoService],
+  providers: [UserInfoService, AuthServiceService, HttpRequestService],
   bootstrap: [AppComponent],
-  entryComponents: [EditModalComponent]
+  entryComponents: [EditModalComponent, CreateNewItemModalComponent]
 })
 export class AppModule { }

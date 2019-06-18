@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light container">
   <a class="navbar-brand" href="/">Brand</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,13 +7,19 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto navigationBar">
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Admin</a>
+      </li>
+
       <div class="greetingLayout">
+        <li class="nav-item">
+          <button class="nav-link shoppingCartBtnToggle"><i class="fas fa-shopping-cart"></i> Shopping cart</button>
+        </li>
         <li class="nav-item userGreeting">
           <div class="userAvatar">
-            <img src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png"
-              alt="Avatar">
+            <img src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" alt="Avatar">
           </div>
-          <span class="nav-link ">Hello {{userFirstName}}</span>
+          <span class="nav-link ">Hello, {{userFirstName}}</span>
         </li>
         <li class="nav-item">
           <a class="nav-link logout" (click)="logout();">Logout</a>

@@ -28,34 +28,16 @@ export interface DataTableItem {
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class DataTableDataSource extends DataSource<DataTableItem> implements OnInit, AfterViewInit {
+export class DataTableDataSource extends DataSource<DataTableItem> implements OnInit {
   data: DataTableItem[] = [];
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor() {
-    super();
-    axios.get('http://localhost:3000/users')
-      .then(res => {
-        for (let i = 0; i < res.data.length; i++) {
-          this.data = res.data;
-        }
-        console.log(this.data);
-      })
-  }
+ 
 
-  ngAfterViewInit() {
-    axios.get('http://localhost:3000/users')
-      .then(res => {
-        for (let i = 0; i < res.data.length; i++) {
-          this.data = res.data;
-        }
-        console.log(this.data);
-      })
-  }
 
   ngOnInit() {
-
+   
   }
 
   /**

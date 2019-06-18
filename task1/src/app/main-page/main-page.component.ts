@@ -9,10 +9,8 @@ import { HeaderService } from '../services/header-service';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-  Auth:AuthServiceService;
   isLoggedIn = false;
-  constructor(private router:Router, private headerService: HeaderService) {
-    this.Auth = new AuthServiceService();
+  constructor(private router:Router, private headerService: HeaderService, private Auth: AuthServiceService) {
   }
 
   async ngOnInit() {

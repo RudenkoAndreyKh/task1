@@ -1,12 +1,13 @@
-.modal{
-    width: 300px;
-    height: 400px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    -o-transform: translate(-50%,-50%);
+.example-full-width{
+    width: 100%;
+}
+input{
+    width: 100%;
+}
+.imageLayout{
+    width: 100%;
+    text-align: center;
+}
+textarea{
+    height: 300px;
 }

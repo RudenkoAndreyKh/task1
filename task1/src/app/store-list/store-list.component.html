@@ -1,10 +1,13 @@
 <div class="container list">
-    <div *ngFor="let item of items" class="itemCard">
-        <div class="imgLayout">
-            <img src="{{item.image}}" alt="{{item.name}}">
+    <div class="content">
+        <div *ngFor="let item of items" class="itemCard">
+            <div class="imgLayout">
+                <img src="{{item.image}}" alt="{{item.name}}">
+            </div>
+            <p class="name">Name: {{item.name}}</p>
+            <p>Description: {{item.description | descriptionsize}}</p>
+            <span class="price">Price: {{item.price}}</span>
+            <button (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to cart</button>
         </div>
-        <p>Name: {{item.name}}</p>
-        <p>Description: {{item.description}}</p>
-        <p><span>Price: {{item.price}}</span></p>
     </div>
 </div>

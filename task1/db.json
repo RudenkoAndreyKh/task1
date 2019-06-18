@@ -1,34 +1,48 @@
 {
   "users": [
     {
-      "email": "AndreyRud@gmail.com",
+      "email": "1",
       "firstName": "Andrey",
       "lastName": "Rudenko",
-      "password": "!2Qwaszx",
+      "password": "1",
       "id": 1
     }
   ],
   "games": [
     {
-      "id": 2,
-      "name": "Cthulhu",
-      "image": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png",
-      "description": "qeqwerqwea sdqwewwwwwwwwwwadq wqwe",
-      "price": "200"
+      "name": "Fluxx",
+      "price": "289",
+      "image": "https://i2.rozetka.ua/goods/2932285/hobby_world_4620011817150_images_2932285303.jpg",
+      "description": "Научиться играть во Fluxx проще некуда: тяни карты, играй карты, а остальное схватишь на лету. Победить тебе помогут красивые глазки. Или подтаявшая шоколадка. А может, молоко с печеньками. Нельзя сказать заранее — правила игры постоянно меняются, главное — успеть крикнуть, что ты победил. Какова цель игры? Хлеб и зрелища или сердца и умы — решать игрокам.",
+      "id": 2
     },
     {
-      "id": 3,
       "name": "Cthulhu",
-      "image": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png",
-      "description": "qeqwe rqweasdqwewwwwwwwww wadqwqwe",
-      "price": "200"
+      "price": "350",
+      "image": "https://i1.rozetka.ua/goods/10327366/68906121_images_10327366569.jpg",
+      "description": "fgdfs sewe rwerwerwe werwerw wewerwerwe",
+      "id": 3
     },
     {
-      "id": 4,
       "name": "Cthulhu",
+      "price": "200",
       "image": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png",
       "description": "qeqwerqweas dqwewwwwwwwwwwa dqwqwe",
-      "price": "200"
+      "id": 4
+    },
+    {
+      "name": "Соображарий ",
+      "price": "235",
+      "image": "https://i2.rozetka.ua/goods/1465217/hobby_world_1407_images_1465217938.jpg",
+      "description": "Сколько животных начинающихся на букву «К» вы знаете? Сможете ли за минуту назвать самое длинное слово на букву «Б»? А сколько товаров из супермаркета слов на букву «Ц» вы сможете вспомнить? Настольная игра «Соображарий» заставит вас задуматься! Она прекрасно подойдёт для шумных вечеринок или тихих семейных вечеров. Развивайте свой кругозор, вспоминайте самые неординарные слова и победа будет в вашем кармане.",
+      "id": 5
+    },
+    {
+      "name": "",
+      "price": "",
+      "image": "",
+      "description": "",
+      "id": 6
     }
   ]
 }

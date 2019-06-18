@@ -25,16 +25,18 @@
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button (click)="editUser(row.id)" mat-icon-button matTooltip="Click to Edit" class="iconbutton btn btn-primary" color="primary">
-          Edit
-        </button>
-        <button (click)="deleteUser(row.id)" mat-icon-button matTooltip="Click to Delete" class="iconbutton btn btn-warning" color="warn">
-          Delete
-        </button>
-      </mat-cell>
-    </ng-container>
+        <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-raised-button (click)="editUser(row)" matTooltip="Click to Edit" class="iconbutton btn"
+            color="primary">
+            Edit
+          </button>
+          <button mat-raised-button (click)="deleteUser(row.id)" matTooltip="Click to Delete" class="iconbutton btn"
+            color="warn">
+            Delete
+          </button>
+        </mat-cell>
+      </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

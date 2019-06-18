@@ -17,22 +17,16 @@ import { HeaderService } from '../services/header-service';
 })
 export class HeaderComponent implements OnInit {
   userFirstName = "";
-  Auth: AuthServiceService;
 
-  constructor(private router: Router, private userInfo: UserInfoService, private headerService: HeaderService) {
-    this.Auth = new AuthServiceService();
+  constructor(private router: Router, private userInfo: UserInfoService, private headerService: HeaderService, private Auth: AuthServiceService) {
+
   }
-
 
   logout() {
     this.Auth.logout();
     this.headerService.announcedisUserLoggedIn(false);
     return this.router.navigate(['login']);
   }
-
-  // firstName = [];
-
-
 
   ngOnInit() {
     this.userInfo.userInfoAnnounced$.subscribe(

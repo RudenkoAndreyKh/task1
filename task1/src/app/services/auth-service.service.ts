@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import axios from 'axios';
 import { User } from '../models/User';
 
@@ -65,11 +64,11 @@ export class AuthServiceService {
     localStorage.removeItem("userLastName");
   }
 
-  deleteUser(id){
+  deleteUser(id) {
     axios.delete(`http://localhost:3000/users/${id}`)
   }
 
-  deleteItem(id){
+  deleteItem(id) {
     axios.delete(`http://localhost:3000/games/${id}`)
   }
 
@@ -87,7 +86,7 @@ export class AuthServiceService {
       .then(res => {
         data = res;
       })
-      return <any>data;
+    return <any>data;
   }
 
 }

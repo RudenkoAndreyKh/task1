@@ -7,14 +7,13 @@ import { AuthServiceService } from '../services/auth-service.service';
 @Component({
   selector: 'app-admin-page',
   templateUrl: './admin-page.component.html',
-  styleUrls: ['./admin-page.component.css']
+  styleUrls: ['./admin-page.component.css'],
 })
 export class AdminPageComponent implements OnInit {
-  
-  Auth:AuthServiceService;
+
   isLoggedIn = false;
-  constructor(private router:Router, private headerService: HeaderService) { 
-    this.Auth = new AuthServiceService();
+  constructor(private router: Router, private headerService: HeaderService, private Auth: AuthServiceService) {
+
   }
 
   async ngOnInit() {

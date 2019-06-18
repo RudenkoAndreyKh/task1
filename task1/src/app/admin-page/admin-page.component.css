@@ -1,12 +1,15 @@
 .tablesCaptionLayout {
     width: auto;
     display: flex;
+    align-items: center;
 }
 
 .tablesCaptionLayout h1 {
     width: 50vw;
-    height: 1.5em;
-    background-color: #eee;
+    height: 100%;
+    text-align: center;
+    background-color: coral;
+    color: #fff;
 }
 
 .tables {

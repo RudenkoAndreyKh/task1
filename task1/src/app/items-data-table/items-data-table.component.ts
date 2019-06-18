@@ -3,6 +3,8 @@ import { MatPaginator, MatSort, MatTable, MatDialog } from '@angular/material';
 import { ItemsDataTableDataSource, ItemsDataTableItem } from './items-data-table-datasource';
 import { AuthServiceService } from '../services/auth-service.service';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
+import axios from 'axios';
+import { CreateNewItemModalComponent } from '../create-new-item-modal/create-new-item-modal.component';
 
 @Component({
   selector: 'app-items-data-table',
@@ -14,10 +16,15 @@ export class ItemsDataTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatTable, {static: false}) table: MatTable<ItemsDataTableItem>;
   dataSource: ItemsDataTableDataSource;
-  Auth: AuthServiceService;
+  constructor(public dialog: MatDialog, private Auth: AuthServiceService){
+    axios.get('http://localhost:3000/games')
+    .then(res => {
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.data = res.data;
 
-  constructor(public dialog: MatDialog){
-
+      this.table.dataSource = this.dataSource;
+    })
   }
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -25,7 +32,6 @@ export class ItemsDataTableComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.dataSource = new ItemsDataTableDataSource();
-    this.Auth = new AuthServiceService();
   }
 
   deleteItem(itemId) {
@@ -34,13 +40,15 @@ export class ItemsDataTableComponent implements AfterViewInit, OnInit {
   }
 
   editItem(item) {
-    this.dialog.open(EditModalComponent, {width: '250px',data: item});
+    this.dialog.open(EditModalComponent, {width: '450px',data: item});
     console.log("succesfully edited", item);
   }
 
+  createNewItem(){
+    this.dialog.open(CreateNewItemModalComponent, {width: '450px',data: {}});
+  }
+
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    
   }
 }

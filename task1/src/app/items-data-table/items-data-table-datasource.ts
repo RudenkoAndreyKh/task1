@@ -28,13 +28,6 @@ export class ItemsDataTableDataSource extends DataSource<ItemsDataTableItem> {
 
   constructor() {
     super();
-    axios.get('http://localhost:3000/games')
-      .then(res => {
-        for (let i = 0; i < res.data.length; i++) {
-          this.data = res.data;
-        }
-        console.log(this.data);
-      })
   }
 
   /**

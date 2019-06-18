@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Add new item</h1>
+<div mat-dialog-content>
+
+  <form [formGroup]="addItemForm">
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="name" matInput placeholder="item name">
+    </mat-form-field>
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="image" matInput placeholder="item image">
+    </mat-form-field>
+
+    <div class="example-full-width imageLayout">
+      <img width="50%" src="" alt="">
+    </div>
+
+    <mat-form-field class="example-full-width mr-md-3">
+      <textarea formControlName="description" matInput placeholder="item description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="price" matInput placeholder="item price">
+    </mat-form-field>
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button (click)="closeModal();" mat-button>Cancle adding</button>
+  <button (click)="add(addItemForm);" mat-button>Add</button>
+</div>
