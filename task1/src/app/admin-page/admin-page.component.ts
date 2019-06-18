@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HeaderService } from '../services/header-service';
+import { AuthServiceService } from '../services/auth-service.service';
+
 
 @Component({
   selector: 'app-admin-page',
@@ -6,10 +10,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-page.component.css']
 })
 export class AdminPageComponent implements OnInit {
+  
+  Auth:AuthServiceService;
+  isLoggedIn = false;
+  constructor(private router:Router, private headerService: HeaderService) { 
+    this.Auth = new AuthServiceService();
+  }
 
-  constructor() { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    await this.Auth.isLoggedIn().then(res => {
+      this.isLoggedIn = res;
+    })
+    if (!this.isLoggedIn) {
+      this.router.navigate(['login']).then(() => {
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+      });
+    }
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
   }
 
 }

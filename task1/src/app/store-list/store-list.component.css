@@ -1,0 +1,44 @@
+.list{
+    width: 100%;
+    min-height: calc(100vh - 3.5em);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.itemCard{
+    width: 250px;
+    height: 400px;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px 1px #ccc;
+    margin-top: 2em;
+    position: relative;
+    border-radius:5px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    -ms-border-radius:5px;
+    -o-border-radius:5px;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -o-transition: 0.2s;
+}
+.itemCard:hover{
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+.imgLayout{
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 0.5em;
+}
+img{
+    width: 100%;
+}
+span{
+    color: royalblue;
+}

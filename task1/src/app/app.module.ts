@@ -12,6 +12,11 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HeaderComponent } from './header/header.component';
 import { UserInfoService } from './services/user-info-service.service';
+import { StoreListComponent } from './store-list/store-list.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatDialog, MatDialogModule, MatButtonModule, MatMenuModule, MatCardModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import { ItemsDataTableComponent } from './items-data-table/items-data-table.component';
+import { EditModalComponent } from './edit-modal/edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +25,30 @@ import { UserInfoService } from './services/user-info-service.service';
     MainPageComponent,
     AdminPageComponent,
     LoginPageComponent,
-    HeaderComponent
+    HeaderComponent,
+    StoreListComponent,
+    DataTableComponent,
+    ItemsDataTableComponent,
+    EditModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatMenuModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [UserInfoService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [EditModalComponent]
 })
 export class AppModule { }

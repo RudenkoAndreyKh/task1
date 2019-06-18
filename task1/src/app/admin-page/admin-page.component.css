@@ -1,0 +1,27 @@
+.tablesCaptionLayout {
+    width: auto;
+    display: flex;
+}
+
+.tablesCaptionLayout h1 {
+    width: 50vw;
+    height: 1.5em;
+    background-color: #eee;
+}
+
+.tables {
+    width: auto;
+    display: flex;
+}
+
+.users-table{
+    width: 100%;
+    height: calc(100vh - 8em);
+    overflow: auto;
+}
+
+.items-table{
+    width: 100%;
+    height: calc(100vh - 8em);
+    overflow: auto;
+}

@@ -1,23 +1,34 @@
 {
   "users": [
     {
-      "email": "11111111@gmail.com",
-      "firstName": "1111111111111111111111",
-      "lastName": "1111111111111111111111",
-      "password": "qwe",
+      "email": "AndreyRud@gmail.com",
+      "firstName": "Andrey",
+      "lastName": "Rudenko",
+      "password": "!2Qwaszx",
       "id": 1
-    },
-    {
-      "email": "qweqwe@gmail.com",
-      "firstName": "qweasd",
-      "lastName": "qweqdas",
-      "password": "!2Qwas",
-      "id": 2
     }
   ],
-  "images": [
+  "games": [
     {
-      "defaultUserImage": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png"
+      "id": 2,
+      "name": "Cthulhu",
+      "image": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png",
+      "description": "qeqwerqwea sdqwewwwwwwwwwwadq wqwe",
+      "price": "200"
+    },
+    {
+      "id": 3,
+      "name": "Cthulhu",
+      "image": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png",
+      "description": "qeqwe rqweasdqwewwwwwwwww wadqwqwe",
+      "price": "200"
+    },
+    {
+      "id": 4,
+      "name": "Cthulhu",
+      "image": "https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png",
+      "description": "qeqwerqweas dqwewwwwwwwwwwa dqwqwe",
+      "price": "200"
     }
   ]
 }

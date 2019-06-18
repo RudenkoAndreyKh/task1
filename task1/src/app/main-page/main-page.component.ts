@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
 import { Router } from '@angular/router';
+import { HeaderService } from '../services/header-service';
 
 @Component({
   selector: 'app-main-page',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class MainPageComponent implements OnInit {
   Auth:AuthServiceService;
   isLoggedIn = false;
-  constructor(private router:Router) {
+  constructor(private router:Router, private headerService: HeaderService) {
     this.Auth = new AuthServiceService();
   }
 
@@ -19,8 +20,11 @@ export class MainPageComponent implements OnInit {
       this.isLoggedIn = res;
     })
     if (!this.isLoggedIn) {
-      this.router.navigate(['login']);
+      this.router.navigate(['login']).then(() => {
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+      });
     }
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
   }
 
 }

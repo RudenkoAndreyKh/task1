@@ -11,11 +11,14 @@ export class AuthServiceService {
   addNewUser(userModel: User) {
     axios.post('http://localhost:3000/users', userModel)
       .then(res => {
-        console.log(res);
+        localStorage.setItem("userEmail", userModel.email);
+        localStorage.setItem("userFirstName", userModel.firstName);
+        localStorage.setItem("userLastName", userModel.lastName);
+        console.log("new user added", res);
       })
   }
+
   async login(userModel: User) {
-    console.log("start");
     let isLoggedIn: boolean = false;
     let userFirstName: string;
     let userLastName: string;
@@ -33,11 +36,11 @@ export class AuthServiceService {
             localStorage.setItem("userLastName", userLastName);
             return;
           };
-          return console.log(false);
         })
       })
     return isLoggedIn;
   }
+
   async isLoggedIn() {
     let isLoggedIn: boolean = false;
     let userEmail = localStorage.getItem("userEmail");
@@ -49,22 +52,42 @@ export class AuthServiceService {
             if (user.email == userEmail) {
               isLoggedIn = true;
             }
-            return console.log(false);
           })
         })
     }
 
     return isLoggedIn;
   }
+
   logout() {
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userFirstName");
     localStorage.removeItem("userLastName");
   }
+
+  deleteUser(id){
+    axios.delete(`http://localhost:3000/users/${id}`)
+  }
+
+  deleteItem(id){
+    axios.delete(`http://localhost:3000/games/${id}`)
+  }
+
   getAllUsers() {
+    let data = {};
     axios.get('http://localhost:3000/users')
       .then(res => {
-        console.log(res);
+        data = res;
       })
   }
+
+  async getAllGames() {
+    let data = {};
+    await axios.get('http://localhost:3000/games')
+      .then(res => {
+        data = res;
+      })
+      return <any>data;
+  }
+
 }

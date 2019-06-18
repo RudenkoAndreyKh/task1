@@ -1,0 +1,10 @@
+<div class="container list">
+    <div *ngFor="let item of items" class="itemCard">
+        <div class="imgLayout">
+            <img src="{{item.image}}" alt="{{item.name}}">
+        </div>
+        <p>Name: {{item.name}}</p>
+        <p>Description: {{item.description}}</p>
+        <p><span>Price: {{item.price}}</span></p>
+    </div>
+</div>

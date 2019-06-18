@@ -1,0 +1,19 @@
+.mat-elevation-z8{
+  width: 50vw;
+}
+.full-width-table {
+  width: 100%;
+}
+.iconbutton{
+  margin-top: 0.3em;
+  margin-left: 1em;
+}
+.mat-row{
+  border-top: 1px solid #000;
+}
+.mat-row:nth-last-child(1){
+  border-bottom: 1px solid #000;
+}
+.mat-row:hover{
+  background-color: #ddd;
+}

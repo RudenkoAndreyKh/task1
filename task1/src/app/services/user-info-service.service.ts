@@ -11,7 +11,6 @@ export class UserInfoService{
     userInfoAnnounced$ = this.userInfoAnnouncedSource;
 
     announcedUserInfo(userModel:User){
-        debugger;
         this.userInfoAnnouncedSource.next(userModel)
     }
 } 

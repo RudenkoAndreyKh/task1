@@ -47,11 +47,11 @@ export class AuthPageComponent implements OnInit {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
-      console.log("shiii")
       return;
     }
-
-    return this.Auth.addNewUser(<User>{ email: this.registerForm.value.email, firstName: this.registerForm.value.firstName, lastName: this.registerForm.value.lastName, password: this.registerForm.value.password });
+    
+    this.Auth.addNewUser(<User>{ email: this.registerForm.value.email, firstName: this.registerForm.value.firstName, lastName: this.registerForm.value.lastName, password: this.registerForm.value.password });
+    this.router.navigate(['']);
   }
 
 }
