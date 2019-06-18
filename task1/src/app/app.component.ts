@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
   }
 
   ngAfterContentChecked(){
-    let user = <User>{ email: localStorage.getItem("userEmail") };
+    let user = <User>{ firstName: localStorage.getItem("userFirstName") };
     this.userInfoService.announcedUserInfo(user);
   }
 }

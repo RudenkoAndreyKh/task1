@@ -10,7 +10,7 @@ import {CartItem} from '../models/CartItem';
 })
 export class StoreListComponent implements OnInit {
   items: Item[] = [];
-  cartItem: CartItem[] = [];
+  cartItem = [];
   constructor(private Auth: AuthServiceService) {
     
   }
@@ -23,8 +23,11 @@ export class StoreListComponent implements OnInit {
   }
 
   addToCart(item){  
-    this.cartItem = item;
-    localStorage.setItem(`${item.name}`, <any>this.cartItem);
+    if(localStorage.getItem('ShoppingCart') !== null) this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
+
+    this.cartItem.push(item);
+    localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+    
   }
 
 }
