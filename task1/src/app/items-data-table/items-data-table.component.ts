@@ -30,13 +30,14 @@ export class ItemsDataTableComponent implements AfterViewInit, OnInit {
       })
   }
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  /** Columns displayed in the table. Columns IdataSource can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'price', 'actions'];
 
   ngOnInit() {
     this.dataSource = new ItemsDataTableDataSource();
     this.updateTable.tableUpdateAnnounced$.subscribe(
       (data: ItemsDataTableItem[]) => {
+        debugger;
         // this.dataSource.data = data;
         this.table.dataSource = new MatTableDataSource<ItemsDataTableItem>(data);
       });
@@ -44,16 +45,16 @@ export class ItemsDataTableComponent implements AfterViewInit, OnInit {
 
   deleteItem(itemId) {
     this.httpReq.deleteItem(itemId, this.dataSource.data).then(res => {
-      let ds = this.dataSource.data;
-      for (let i = 0; i < ds.length; i++) {
-        if (ds[i].id == itemId) {
+      let dataSource = this.dataSource.data;
+      for (let i = 0; i < dataSource.length; i++) {
+        if (dataSource[i].id == itemId) {
           debugger;
-          ds.splice(i, 1);
+          dataSource.splice(i, 1);
           break;
         }
       }
-      this.dataSource.data = ds;
-      this.table.dataSource = new MatTableDataSource<ItemsDataTableItem>(ds);
+      this.dataSource.data = dataSource;
+      this.table.dataSource = new MatTableDataSource<ItemsDataTableItem>(dataSource);
     });
   }
 
@@ -63,17 +64,6 @@ export class ItemsDataTableComponent implements AfterViewInit, OnInit {
 
   createNewItem() {
     this.dialog.open(CreateNewItemModalComponent, { width: '450px', data: this })
-  }
-
-  async add(newItem) {
-    console.log(this);
-    await this.httpReq.addItem(newItem);
-    let ds;
-    axios.get(environment.domain + '/games')
-      .then(res => {
-        ds = res.data;
-        this.table.dataSource = new MatTableDataSource<ItemsDataTableItem>(ds);
-      })
   }
 
   ngAfterViewInit() {

@@ -30,7 +30,16 @@ export class CreateNewItemModalComponent implements OnInit{
   }
 
   public async add(newItem) {
-    this.item.add(newItem);
+    // this.item.add(newItem);
+    var result = await this.httpReq.addItem(newItem);
+    debugger;
+    if(result.status === 201){
+     
+      let dataSource:any = await <any>this.httpReq.getAllGames();
+      debugger;
+      this.updateTable.announcedTableUpdate(dataSource.data);
+    }
+   
   }
 
 }
