@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTable } from '@angular/material';
 import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { AuthServiceService } from '../services/auth-service.service';
 import axios from 'axios';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-data-table',
@@ -23,7 +24,7 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    axios.get('http://localhost:3000/users')
+    axios.get(environment.domain+'/users')
     .then(res => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;

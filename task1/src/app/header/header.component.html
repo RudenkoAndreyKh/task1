@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light container">
+<nav class="navbar navbar-expand-lg navbar-light ">
   <a class="navbar-brand" href="/">Brand</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +13,16 @@
 
       <div class="greetingLayout">
         <li class="nav-item">
-          <button class="nav-link shoppingCartBtnToggle"><i class="fas fa-shopping-cart"></i> Shopping cart</button>
+          <button (click)="shoppingCart = !shoppingCart" class="nav-link shoppingCartBtnToggle"><i
+              class="fas fa-shopping-cart"></i> Shopping cart</button>
+
+          <div class="shoppingCart" *ngIf="shoppingCart">
+            <ul>
+              <li class="listElement" *ngFor="let cartItem of cartItem"> {{cartItem.name}} <span
+                  class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
+                  {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i class="fas fa-times"></i></button></span> </li>
+            </ul>
+          </div>
         </li>
         <li class="nav-item userGreeting">
           <div class="userAvatar">

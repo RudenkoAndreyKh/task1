@@ -22,6 +22,7 @@ import { HttpRequestService } from './services/http-request.service';
 import { CreateNewItemModalComponent } from './create-new-item-modal/create-new-item-modal.component';
 import { DescriptionSizePipe } from './pipes/descriptio-size.pipe';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { Extensions } from './services/extensions.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     MatInputModule,
     AngularFontAwesomeModule
   ],
-  providers: [UserInfoService, AuthServiceService, HttpRequestService],
+  providers: [UserInfoService, AuthServiceService, HttpRequestService, Extensions],
   bootstrap: [AppComponent],
   entryComponents: [EditModalComponent, CreateNewItemModalComponent]
 })

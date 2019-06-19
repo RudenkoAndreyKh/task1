@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { UserInfoService } from './services/user-info-service.service';
 import { User } from './models/User';
 import { AuthServiceService } from './services/auth-service.service';

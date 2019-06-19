@@ -1,32 +1,43 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { FormGroup } from '@angular/forms';
+import {environment} from '../../environments/environment';
+import { Extensions } from './extensions.service';
+import { TableUpdateService } from './update-table.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpRequestService {
 
+  constructor(private ext:Extensions, private updateTable:TableUpdateService){
+
+  }
+
   getAllUsers() {
     let data = {};
-    axios.get('http://localhost:3000/users')
+    axios.get(environment+'/users')
       .then(res => {
         data = res;
       })
       return <any>data;
   }
 
-  getAllGames() {
+  async getAllGames() {
     let data = {};
-    axios.get('http://localhost:3000/games')
+    await axios.get(environment+'/games')
       .then(res => {
         data = res;
       })
       return <any>data;
+  }
+
+  deleteItem(id, data){
+    return axios.delete(environment.domain+`/games/${id}/`);
   }
 
   editItem(item: FormGroup, id){
-    axios.put(`http://localhost:3000/games/${id}/`, {
+    axios.put(environment.domain+`/games/${id}/`, {
       name: item.value.name,
       price: item.value.price,
       image: item.value.image,
@@ -38,7 +49,7 @@ export class HttpRequestService {
   }
 
   addItem(item: FormGroup){
-    axios.post(`http://localhost:3000/games`, {
+    axios.post(environment.domain+`/games`, {
       name: item.value.name,
       price: item.value.price,
       image: item.value.image,

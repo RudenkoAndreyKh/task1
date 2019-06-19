@@ -1,9 +1,11 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, OnChanges } from '@angular/core';
 import { UserInfoService } from '../services/user-info-service.service';
 import { AuthServiceService } from '../services/auth-service.service';
 import { User } from '../models/User';
 import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
+import { CartItem } from '../models/CartItem';
+import {CartUpdateService} from '../services/cart-update.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +19,11 @@ import { HeaderService } from '../services/header-service';
 })
 export class HeaderComponent implements OnInit {
   userFirstName = "";
+  shoppingCart = false;
+  cartItem: CartItem[] = [];
 
-  constructor(private router: Router, private userInfo: UserInfoService, private headerService: HeaderService, private Auth: AuthServiceService) {
+
+  constructor(private router: Router, private userInfo: UserInfoService, private cartUpdate: CartUpdateService, private headerService: HeaderService, private Auth: AuthServiceService) {
 
   }
 
@@ -33,6 +38,33 @@ export class HeaderComponent implements OnInit {
       (user: User) => {
         this.userFirstName = user.firstName;
       });
+
+    if (localStorage.getItem('ShoppingCart') !== null) {
+      this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'))
+    };
+
+    this.cartUpdate.CartUpdateAnnounced$.subscribe(
+      (cart: CartItem[]) => {
+        this.cartItem = cart;
+      });
+  }
+
+  deleteItem(item) {
+    if (item.quantity > 1) {
+      this.cartItem[this.filterId(item, this.cartItem)].quantity -= 1;
+      localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+      return;
+    }
+    this.cartItem.splice(this.filterId(item, this.cartItem), 1);
+    localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+  }
+
+  filterId(item, data) {
+    let result: number;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id == item.id) result = i;
+    }
+    return result;
   }
 
 }
