@@ -31,16 +31,13 @@ export class HttpRequestService {
     return axios.delete(environment.domain+`/games/${id}/`);
   }
 
-  editItem(item: FormGroup, id){
-    axios.put(environment.domain+`/games/${id}/`, {
+  async editItem(item: FormGroup, id){
+    return await axios.put(environment.domain+`/games/${id}/`, {
       name: item.value.name,
       price: item.value.price,
       image: item.value.image,
       description: item.value.description
-    })
-    .then(res => {
-      console.log(res);
-    })
+    });
   }
 
   addItem(item: FormGroup){

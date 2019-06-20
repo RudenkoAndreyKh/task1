@@ -44,6 +44,7 @@ export class StoreListComponent implements OnInit {
     console.log("item created", item);
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+    this.cartUpdate.announcedCartUpdate(this.cartItem);
   }
 
 }

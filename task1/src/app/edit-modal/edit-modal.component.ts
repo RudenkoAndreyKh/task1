@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpRequestService } from '../services/http-request.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { TableUpdateService } from '../services/update-table.service';
 
 @Component({
   selector: 'app-edit-modal',
@@ -12,9 +13,9 @@ export class EditModalComponent implements OnInit {
 
   editItemForm: FormGroup;
 
-  constructor(private matDialogRef: MatDialogRef<EditModalComponent>, @Inject(MAT_DIALOG_DATA) public item: any, private httpReq: HttpRequestService) { }
+  constructor(private matDialogRef: MatDialogRef<EditModalComponent>, private updateTable:TableUpdateService, @Inject(MAT_DIALOG_DATA) public item: any, private httpReq: HttpRequestService) { }
 
-  
+
 
   ngOnInit() {
     this.editItemForm = new FormGroup({
@@ -25,14 +26,21 @@ export class EditModalComponent implements OnInit {
     })
   }
 
-  public closeModal(){
+  public closeModal() {
     this.matDialogRef.close();
   }
 
-  public edit(item, id){
+  public async edit(item, id) {
     console.log(item);
-    this.httpReq.editItem(item, id);
-    this.matDialogRef.close();
+    var result = await this.httpReq.editItem(item, id);
+    console.log(result);
+    if (result.status === 200) {
+      let dataSource: any = await <any>this.httpReq.getAllGames();
+      debugger;
+      this.updateTable.announcedTableUpdate(dataSource.data);
+      this.matDialogRef.close();
+    }
+
   }
 
 }

@@ -20,7 +20,8 @@
             <ul>
               <li class="listElement" *ngFor="let cartItem of cartItem"> {{cartItem.name}} <span
                   class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
-                  {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i class="fas fa-times"></i></button></span> </li>
+                  {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
+                      class="fas fa-times"></i></button></span> </li>
             </ul>
           </div>
         </li>
@@ -34,6 +35,13 @@
           <a class="nav-link logout" (click)="logout();">Logout</a>
         </li>
       </div>
+    </ul>
+  </div>
+
+  <div class="itemImagesFromCart">
+    <ul>
+      <li class="listElement" *ngFor="let cartItem of cartItem"><img src="{{cartItem.image}}" alt="{{cartItem.name}}"><span
+          class="badge badge-secondary ">{{cartItem.quantity}}</span></li>
     </ul>
   </div>
 </nav>

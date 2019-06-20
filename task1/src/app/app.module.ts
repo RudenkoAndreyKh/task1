@@ -23,6 +23,8 @@ import { CreateNewItemModalComponent } from './create-new-item-modal/create-new-
 import { DescriptionSizePipe } from './pipes/descriptio-size.pipe';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Extensions } from './services/extensions.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { Extensions } from './services/extensions.service';
     ItemsDataTableComponent,
     EditModalComponent,
     CreateNewItemModalComponent,
-    DescriptionSizePipe
+    DescriptionSizePipe,
+    PageNotFoundComponent,
+    ItemDetailComponent
   ],
   imports: [
     BrowserModule,
