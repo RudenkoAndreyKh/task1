@@ -38,6 +38,8 @@ export class HeaderComponent implements OnInit {
     this.userInfo.userInfoAnnounced$.subscribe(
       (user: User) => {
         this.userFirstName = user.firstName;
+        this.userAvatar = user.image;
+        console.log(this.userAvatar);
       });
 
     if (localStorage.getItem('ShoppingCart') !== null) {
@@ -54,6 +56,10 @@ export class HeaderComponent implements OnInit {
     return this.router.navigate(['user-page']);
   }
 
+  goToItemDetails(id){
+    this.router.navigate([`game-details/${id}`]);
+  }
+
   deleteItem(item) {
     if (item.quantity > 1) {
       this.cartItem[this.filterId(item, this.cartItem)].quantity -= 1;
@@ -62,6 +68,16 @@ export class HeaderComponent implements OnInit {
     }
     this.cartItem.splice(this.filterId(item, this.cartItem), 1);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+  }
+
+  clearAllCartItems(){
+    event.stopPropagation();
+    localStorage.removeItem('ShoppingCart');
+    this.cartItem = [];
+  }
+
+  goToOrder(){
+    this.router.navigate(['order-page']);
   }
 
   filterId(item, data) {

@@ -15,19 +15,24 @@
         <li class="nav-item">
           <button (click)="shoppingCart = !shoppingCart" class="nav-link shoppingCartBtnToggle"><i
               class="fas fa-shopping-cart"></i> Shopping cart</button>
-
           <div class="shoppingCart" *ngIf="shoppingCart">
             <ul>
-              <li class="listElement" *ngFor="let cartItem of cartItem"> {{cartItem.name}} <span
-                  class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
-                  {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
-                      class="fas fa-times"></i></button></span> </li>
+              <li class="listElement" *ngFor="let cartItem of cartItem">
+                <div class="listEl" (click)="goToItemDetails(cartItem.id);">{{cartItem.name}} <span
+                    class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
+                    {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
+                        class="fas fa-times"></i></button></span> </div>
+              </li>
             </ul>
+            <div class="cartBtns">
+              <button class="btn clearBtn" (click)="clearAllCartItems();">Clear all</button>
+              <button class="btn goToOrderBtn" (click)="goToOrder();">Go to order</button>
+            </div>
           </div>
         </li>
         <li class="nav-item userGreeting">
           <div (click)="openUserInfo();" class="userAvatar">
-            <img src="https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" alt="Avatar">
+            <img src="{{userAvatar}}" alt="Avatar">
           </div>
           <span class="nav-link ">Hello, {{userFirstName}}</span>
         </li>
@@ -38,10 +43,10 @@
     </ul>
   </div>
 
-  <div class="itemImagesFromCart">
+  <!-- <div class="itemImagesFromCart">
     <ul>
       <li class="listElement" *ngFor="let cartItem of cartItem"><img src="{{cartItem.image}}" alt="{{cartItem.name}}"><span
           class="badge badge-secondary ">{{cartItem.quantity}}</span></li>
     </ul>
-  </div>
+  </div> -->
 </nav>

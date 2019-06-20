@@ -36,18 +36,23 @@ export class LoginPageComponent implements OnInit {
   }
 
   async login() {
-    await this.Auth.login(<User>{ email: this.loginForm.value.email, password: this.loginForm.value.password })
+    await this.Auth.login()
     .then(res => {
-      this.isLoggedIn = res;
-
-      if (this.isLoggedIn) {
-        let user = <User>{ email: this.loginForm.value.email, password: this.loginForm.value.password };
-        this.userInfoService.announcedUserInfo(user);
-        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-        this.router.navigate(['']);
-       
-      };
-    });
+      let data = res;
+      data.data.filter(user => {
+        console.log(user.email, this.loginForm.controls.email.value);
+        console.log(user.password, this.loginForm.controls.password.value)
+        if (user.email == this.loginForm.controls.email.value && user.password == this.loginForm.controls.password.value) {
+          this.isLoggedIn = true;
+          localStorage.setItem("userEmail", user.email);
+          localStorage.setItem("userFirstName", user.firstName);
+          localStorage.setItem("userLastName", user.lastName);
+          localStorage.setItem("userAvatar", user.image);
+          this.router.navigate(['']);
+          return;
+        };
+      })
+    })
     
     
   }

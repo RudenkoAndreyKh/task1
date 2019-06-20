@@ -16,6 +16,8 @@ export class StoreListComponent implements OnInit {
   items: Item[] = [];
   cartItem: CartItem[] = [];
   currItem: Item;
+  searchText = '';
+  searchText1 = '';
   constructor(private router: Router, private Auth: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions) {
 
   }
@@ -29,6 +31,9 @@ export class StoreListComponent implements OnInit {
 
   addToCart(item: CartItem) {
     event.stopPropagation()
+    if (localStorage.getItem('ShoppingCart') == null) {
+      this.cartItem = [];
+    }
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
     }
@@ -44,11 +49,22 @@ export class StoreListComponent implements OnInit {
       }
     }
     item.quantity = 1;
+
     console.log("item created", item);
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);
 
+  }
+
+  search(){
+    console.log("sss");
+    // this.cartItem.pipe(debounceTime(1000))
+    // .subscribe(
+    //   res => {
+    //     console.log(res);
+    //   })
+    this.searchText1 = this.searchText;
   }
 
   goToGameDetails(item) {

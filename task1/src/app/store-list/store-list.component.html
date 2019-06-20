@@ -1,11 +1,16 @@
 <div class="container list">
+    <form>
+        <input [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" (keyup)=search() class="form-control mr-sm-2" type="search" placeholder="search..."
+            aria-label="Search">
+    </form>
+    <span>{{searchText1}}</span>
     <div class="content">
-        <div *ngFor="let item of items" (click)="goToGameDetails(item);" class="itemCard">
+        <div *ngFor="let item of items | filter : searchText" (click)="goToGameDetails(item);" class="itemCard">
             <div class="imgLayout">
                 <img src="{{item.image}}" alt="{{item.name}}">
             </div>
-            <p class="name">Name: {{item.name}}</p>
-            <p>Description: {{item.description | descriptionsize}}</p>
+            <p class="name">{{item.name}}</p>
+            <p>{{item.description | descriptionsize}}</p>
             <span class="price">Price: {{item.price}}</span>
             <button (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to cart</button>
         </div>

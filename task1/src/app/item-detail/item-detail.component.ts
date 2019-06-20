@@ -4,6 +4,11 @@ import { switchMap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { Item } from '../models/Item';
 import { HttpRequestService } from '../services/http-request.service';
+import { AuthServiceService } from '../services/auth-service.service';
+import { HeaderService } from '../services/header-service';
+import { CartItem } from '../models/CartItem';
+import { Extensions } from '../services/extensions.service';
+import { CartUpdateService } from '../services/cart-update.service';
 
 @Component({
   selector: 'app-item-detail',
@@ -13,11 +18,13 @@ import { HttpRequestService } from '../services/http-request.service';
 export class ItemDetailComponent implements OnInit {
 
   item: Item;
+  isLoggedIn = false;
+  cartItem: CartItem[] = [];
 
   private id: number;
   private routeSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private httpReq: HttpRequestService) {
+  constructor(private route: ActivatedRoute, private router: Router, private cartUpdate: CartUpdateService, private ext: Extensions, private headerService: HeaderService, private Auth: AuthServiceService, private httpReq: HttpRequestService) {
 
     this.routeSubscription = route.params.subscribe((params: Item) => {
       this.id = params['id'];
@@ -26,9 +33,44 @@ export class ItemDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.Auth.isLoggedIn().then(res => {
+      this.isLoggedIn = res;
+    })
+    if (!this.isLoggedIn) {
+      this.router.navigate(['login']).then(() => {
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+      });
+    }
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
     await this.httpReq.getUserById(this.id).then(res => {
       this.item = res.data;
     })
+  }
+
+  addToCart(item: CartItem) {
+    if (localStorage.getItem('ShoppingCart') == null) {
+      this.cartItem = [];
+    }
+    if (localStorage.getItem('ShoppingCart') !== null) {
+      this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
+    }
+    if (localStorage.getItem('ShoppingCart') !== null) {
+      let data = JSON.parse(localStorage.getItem('ShoppingCart'));
+      if (this.ext.filterId(item, data) + 1) {
+        console.log("id already exist");
+        this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
+        this.cartItem[this.ext.filterId(item, data)].quantity += 1;
+        localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+        this.cartUpdate.announcedCartUpdate(this.cartItem);
+        return;
+      }
+    }
+    item.quantity = 1;
+    console.log("item created", item);
+    this.cartItem.push(item);
+    localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
+    this.cartUpdate.announcedCartUpdate(this.cartItem);
+
   }
 
 }

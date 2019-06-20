@@ -1,4 +1,3 @@
-
 .navigationBar {
     width: 100%;
     display: flex;
@@ -33,7 +32,8 @@
     border-radius: 50%;
     cursor: pointer;
 }
-.shoppingCartBtnToggle{
+
+.shoppingCartBtnToggle {
     margin-right: 1em;
     background-color: transparent;
     color: coral;
@@ -43,56 +43,44 @@
     cursor: pointer;
 }
 
-.shoppingCartBtnToggle:hover{
+.shoppingCartBtnToggle:hover {
     border: 1px solid coral;
 }
 
-.shoppingCart{
+.shoppingCart {
     width: 350px;
     height: 450px;
-    overflow: auto;
     position: absolute;
-    padding: 15px;
     bottom: -470px;
-    background-color: #fff;
-    border: 1px solid #f1f1f1;
-    box-shadow: 2px 1px 2px 1px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
 }
 
-.shoppingCart::-webkit-scrollbar {
+.shoppingCart ul::-webkit-scrollbar {
     width: 10px;
 }
- 
-  .shoppingCart::-webkit-scrollbar-track {
+
+.shoppingCart ul::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 0 15px 15px 0;
-    -webkit-border-radius: 0 15px 15px 0;
-    -moz-border-radius: 0 15px 15px 0;
-    -ms-border-radius: 0 15px 15px 0;
-    -o-border-radius: 0 15px 15px 0;
 }
 
-  .shoppingCart::-webkit-scrollbar-thumb {
-    background: coral; 
-    border-radius: 0 15px 15px 0;
-    -webkit-border-radius: 0 15px 15px 0;
-    -moz-border-radius: 0 15px 15px 0;
-    -ms-border-radius: 0 15px 15px 0;
-    -o-border-radius: 0 15px 15px 0;
-  }
+.shoppingCart ul::-webkit-scrollbar-thumb {
+    background: coral;
+}
 
-  .shoppingCart::-webkit-scrollbar-thumb:hover {
-    background: coral; 
-  }
+.shoppingCart ul::-webkit-scrollbar-thumb:hover {
+    background: coral;
+}
 
-.shoppingCart ul{
+.shoppingCart ul {
+    overflow: auto;
+    height: 80%;
     margin: 0;
     list-style: none;
-    padding: 0;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 2px 0 3px 1px rgba(0, 0, 0, 0.2);
 }
 
-.listElement{
+.listElement {
     width: 100%;
     height: 4em;
     position: relative;
@@ -105,26 +93,33 @@
     transition: 0.2s;
 }
 
-.listElement:hover{
+.listElement:hover {
     background-color: #eee;
 }
 
-.badge{
+.listEl{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.badge {
     margin-left: 0.5em;
     background-color: coral;
 }
 
-.priceAndDelete{
+.priceAndDelete {
     color: royalblue;
     position: absolute;
     right: 0px;
 }
 
-.listElement:nth-last-child(1){
+.listElement:nth-last-child(1) {
     border-bottom: 0;
 }
 
-.deleteItem{
+.deleteItem {
     background-color: transparent;
     border-radius: 5px;
     border: 0;
@@ -133,7 +128,7 @@
     transition: 0.2s;
 }
 
-.deleteItem:hover{
+.deleteItem:hover {
     color: coral;
 }
 
@@ -142,18 +137,19 @@
     border-radius: 50%;
 }
 
-.helloSpan{
+.helloSpan {
     color: #444;
 }
 
 .logout {
     cursor: pointer;
 }
-i{
+
+i {
     font-weight: bolder;
 }
 
-.itemImagesFromCart{
+.itemImagesFromCart {
     height: 50vh;
     width: 8em;
     position: fixed;
@@ -168,40 +164,90 @@ i{
     overflow: auto;
 }
 
-.itemImagesFromCart ul{
+.itemImagesFromCart ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.itemImagesFromCart li{
+.itemImagesFromCart li {
     height: 100%;
     padding: 2em;
 }
 
-.itemImagesFromCart .badge{
+.itemImagesFromCart .badge {
     position: absolute;
     right: 5px;
     top: 5px;
 }
 
-.itemImagesFromCart img{
+.itemImagesFromCart img {
     width: 50px;
     height: 100%;
 }
 
 .itemImagesFromCart::-webkit-scrollbar {
     width: 10px;
-  }
- 
-  .itemImagesFromCart::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
+}
 
-  .itemImagesFromCart::-webkit-scrollbar-thumb {
-    background: royalblue; 
-  }
+.itemImagesFromCart::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
 
-  .itemImagesFromCart::-webkit-scrollbar-thumb:hover {
-    background: royalblue; 
-  }
+.itemImagesFromCart::-webkit-scrollbar-thumb {
+    background: royalblue;
+}
+
+.itemImagesFromCart::-webkit-scrollbar-thumb:hover {
+    background: royalblue;
+}
+
+.cartBtns{
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.clearBtn {
+    font-size: 18px;
+    color: royalblue;
+    width: 50%;
+    background-color: #fff;
+    border: 1px solid #f3f3f3;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -o-transition: 0.2s;
+}
+
+.clearBtn:hover {
+    color: #fff;
+    background-color: royalblue;
+}
+
+.goToOrderBtn {
+    font-size: 18px;
+    color: royalblue;
+    width: 50%;
+    background-color: #fff;
+    border: 1px solid #f3f3f3;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -o-transition: 0.2s;
+}
+
+.goToOrderBtn:hover {
+    color: #fff;
+    background-color: royalblue;
+}

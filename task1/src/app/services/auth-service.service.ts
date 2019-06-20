@@ -18,27 +18,8 @@ export class AuthServiceService {
       })
   }
 
-  async login(userModel: User) {
-    let isLoggedIn: boolean = false;
-    let userFirstName: string;
-    let userLastName: string;
-    await axios.get(environment.domain+'/users')
-      .then(res => {
-        let data = res;
-        data.data.filter(user => {
-          console.log(user.email, userModel.email, user.password, userModel.password)
-          if (user.email == userModel.email && user.password == userModel.password) {
-            isLoggedIn = true;
-            userFirstName = user.firstName;
-            userLastName = user.lastName;
-            localStorage.setItem("userEmail", userModel.email);
-            localStorage.setItem("userFirstName", userFirstName);
-            localStorage.setItem("userLastName", userLastName);
-            return;
-          };
-        })
-      })
-    return isLoggedIn;
+  async login() {
+    return await axios.get(environment.domain+'/users')
   }
 
   async isLoggedIn() {

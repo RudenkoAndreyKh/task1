@@ -1,1 +1,5 @@
-
+.mainPage {
+    width: 100%;
+    min-height: calc(100vh - 3.5em);
+    background: url(../../images/background.png) right repeat-y;
+}

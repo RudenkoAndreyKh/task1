@@ -51,12 +51,7 @@ export class HttpRequestService {
   }
 
   async changeUserInfo(data){
-    debugger;
-    return await axios.put(environment.domain+`/users/${data.id}`,{
-      firstName: data.firstName,
-      lastName: data.lastName,
-      image: data.image
-    })
+    return await axios.put(environment.domain+`/users/${data.id}`, data)
   }
 
 }

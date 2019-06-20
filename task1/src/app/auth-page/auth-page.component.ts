@@ -47,7 +47,7 @@ export class AuthPageComponent implements OnInit {
       return;
     }
     
-    this.Auth.addNewUser(<User>{ email: this.registerForm.value.email, firstName: this.registerForm.value.firstName, lastName: this.registerForm.value.lastName, password: this.registerForm.value.password });
+    this.Auth.addNewUser(<User>{ email: this.registerForm.value.email, firstName: this.registerForm.value.firstName, lastName: this.registerForm.value.lastName, password: this.registerForm.value.password, image: 'https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png' });
     this.router.navigate(['']);
   }
 

@@ -4,6 +4,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    background: url(../../images/background.png) right no-repeat / cover;
+}
+.col-sm-4{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .error{
     margin-top: 1em;
