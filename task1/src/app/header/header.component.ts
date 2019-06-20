@@ -19,12 +19,13 @@ import {CartUpdateService} from '../services/cart-update.service';
 })
 export class HeaderComponent implements OnInit {
   userFirstName = "";
+  userAvatar = '';
   shoppingCart = false;
   cartItem: CartItem[] = [];
 
 
   constructor(private router: Router, private userInfo: UserInfoService, private cartUpdate: CartUpdateService, private headerService: HeaderService, private Auth: AuthServiceService) {
-
+    
   }
 
   logout() {
@@ -40,13 +41,17 @@ export class HeaderComponent implements OnInit {
       });
 
     if (localStorage.getItem('ShoppingCart') !== null) {
-      this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'))
+      this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
     };
 
     this.cartUpdate.CartUpdateAnnounced$.subscribe(
       (cart: CartItem[]) => {
         this.cartItem = cart;
       });
+  }
+
+  openUserInfo(){
+    return this.router.navigate(['user-page']);
   }
 
   deleteItem(item) {

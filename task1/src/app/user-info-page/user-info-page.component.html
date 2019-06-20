@@ -1,0 +1,26 @@
+<div class="container">
+  <h1>You can change your info</h1>
+  <form [formGroup]="userChangeForm" (submit)="changeUser();">
+    <div class="form-group">
+      <label>First Name</label>
+      <input formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" type="text"
+        class="form-control" placeholder="type your first name here...">
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Second Name</label>
+      <input formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" type="text"
+        class="form-control" placeholder="type your second name here...">
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Your avatar</label>
+      <input formControlName="image" type="text" class="form-control" placeholder="input your image url here...">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

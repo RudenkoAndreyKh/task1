@@ -1,10 +1,9 @@
 {
   "users": [
     {
-      "email": "1",
       "firstName": "Andrey",
       "lastName": "Rudenko",
-      "password": "1",
+      "image": "",
       "id": 1
     }
   ],
@@ -38,60 +37,18 @@
       "id": 29
     },
     {
-      "name": "sdasdq",
-      "price": "",
+      "name": "11212",
+      "price": "33333",
       "image": "",
       "description": "",
-      "id": 84
+      "id": 92
     },
     {
-      "name": "asdasdasd",
+      "name": "fghrt",
       "price": "",
       "image": "",
       "description": "",
-      "id": 85
-    },
-    {
-      "name": "aaaaa",
-      "price": "",
-      "image": "",
-      "description": "",
-      "id": 86
-    },
-    {
-      "name": "xxxxxxx",
-      "price": "",
-      "image": "",
-      "description": "",
-      "id": 87
-    },
-    {
-      "name": "",
-      "price": "",
-      "image": "",
-      "description": "",
-      "id": 88
-    },
-    {
-      "name": "",
-      "price": "",
-      "image": "",
-      "description": "",
-      "id": 89
-    },
-    {
-      "name": "",
-      "price": "",
-      "image": "",
-      "description": "",
-      "id": 90
-    },
-    {
-      "name": "",
-      "price": "",
-      "image": "",
-      "description": "",
-      "id": 91
+      "id": 93
     }
   ]
 }

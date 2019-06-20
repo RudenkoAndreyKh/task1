@@ -1,6 +1,6 @@
 <div class="container list">
     <div class="content">
-        <div *ngFor="let item of items" class="itemCard">
+        <div *ngFor="let item of items" (click)="goToGameDetails(item);" class="itemCard">
             <div class="imgLayout">
                 <img src="{{item.image}}" alt="{{item.name}}">
             </div>

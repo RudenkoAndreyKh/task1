@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
 import { Item } from '../models/Item';
 import { CartItem } from '../models/CartItem';
-import {CartUpdateService} from '../services/cart-update.service';
+import { CartUpdateService } from '../services/cart-update.service';
 import { Extensions } from '../services/extensions.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { Extensions } from '../services/extensions.service';
 export class StoreListComponent implements OnInit {
   items: Item[] = [];
   cartItem: CartItem[] = [];
-  constructor(private Auth: AuthServiceService, private cartUpdate: CartUpdateService, private ext:Extensions) {
+  currItem: Item;
+  constructor(private router: Router, private Auth: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions) {
 
   }
 
@@ -26,6 +28,7 @@ export class StoreListComponent implements OnInit {
   }
 
   addToCart(item: CartItem) {
+    event.stopPropagation()
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
     }
@@ -45,6 +48,11 @@ export class StoreListComponent implements OnInit {
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);
+
+  }
+
+  goToGameDetails(item) {
+    this.router.navigate([`/game-details/${item.id}`]);
   }
 
 }

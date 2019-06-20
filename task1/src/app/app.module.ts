@@ -25,6 +25,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { Extensions } from './services/extensions.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
+import { UserInfoPageComponent } from './user-info-page/user-info-page.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ItemDetailComponent } from './item-detail/item-detail.component';
     CreateNewItemModalComponent,
     DescriptionSizePipe,
     PageNotFoundComponent,
-    ItemDetailComponent
+    ItemDetailComponent,
+    UserInfoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,12 @@ import { ItemDetailComponent } from './item-detail/item-detail.component';
     MatInputModule,
     AngularFontAwesomeModule
   ],
-  providers: [UserInfoService, AuthServiceService, HttpRequestService, Extensions],
+  providers: [
+    UserInfoService, 
+    AuthServiceService, 
+    HttpRequestService, 
+    Extensions
+  ],
   bootstrap: [AppComponent],
   entryComponents: [EditModalComponent, CreateNewItemModalComponent]
 })

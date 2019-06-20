@@ -1,0 +1,11 @@
+.itemDetail{
+    height: calc(100vh - 3em);
+    display: flex;
+    flex-direction: column;
+}
+
+.infoCard img{
+    width: 300px;
+    padding: 15px;
+    border: 1px solid coral;
+}

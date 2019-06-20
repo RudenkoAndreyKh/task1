@@ -1,3 +1,7 @@
-<p>
-  item-detail works!
-</p>
+<div class="container itemDetail" *ngIf="item != null">
+  <div class="infoCard">
+    <img src="{{item.image}}" alt="{{item.name}}">
+    <h1>{{item.name}}</h1>
+    <p>{{item.description}}</p>
+  </div>
+</div>

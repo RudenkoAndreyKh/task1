@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import {environment} from '../../environments/environment';
 import { Extensions } from './extensions.service';
 import { TableUpdateService } from './update-table.service';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +15,16 @@ export class HttpRequestService {
 
   }
 
-  getAllUsers() {
-    let data = {};
-    axios.get(environment+'/users')
-      .then(res => {
-        data = res;
-      })
-      return <any>data;
+  async getAllUsers() {
+    return await axios.get(environment.domain+'/users');
   }
 
   async getAllGames() {
     return await axios.get(environment.domain+'/games');
+  }
+
+  async getUserById(id){
+    return await axios.get(environment.domain+`/games/${id}/`)
   }
 
   deleteItem(id, data){
@@ -48,6 +48,15 @@ export class HttpRequestService {
       description: item.value.description
     });
     
+  }
+
+  async changeUserInfo(data){
+    debugger;
+    return await axios.put(environment.domain+`/users/${data.id}`,{
+      firstName: data.firstName,
+      lastName: data.lastName,
+      image: data.image
+    })
   }
 
 }
