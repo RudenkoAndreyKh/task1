@@ -10,6 +10,10 @@ form{
     margin: 0;
 }
 
+input{
+    width: 100%;
+}
+
 .content {
     padding-top: 4em;
     display: flex;

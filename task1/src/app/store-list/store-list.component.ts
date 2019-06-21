@@ -6,6 +6,13 @@ import { CartUpdateService } from '../services/cart-update.service';
 import { Extensions } from '../services/extensions.service';
 import { Router } from '@angular/router';
 
+import { FormControl } from '@angular/forms';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import axios from 'axios';
+
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-store-list',
@@ -13,12 +20,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./store-list.component.css']
 })
 export class StoreListComponent implements OnInit {
+
+  searchItems = new FormControl();
+  filteredItems: any;
+  isLoading = false;
+  errorMsg: string;
+
+  data: Item[] = [];
   items: Item[] = [];
   cartItem: CartItem[] = [];
   currItem: Item;
-  searchText = '';
-  searchText1 = '';
-  constructor(private router: Router, private Auth: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions) {
+
+  isFilteredItemsNull: boolean = false;
+  constructor(private router: Router, private Auth: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions, private http: HttpClient) {
 
   }
 
@@ -26,7 +40,42 @@ export class StoreListComponent implements OnInit {
     await this.Auth.getAllGames()
       .then(res => {
         this.items = res.data;
+        this.data = res.data;
       })
+    this.searchItems.valueChanges
+      .pipe(
+        debounceTime(500),
+        tap(() => {
+          this.errorMsg = "";
+          this.filteredItems = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => this.http.get(environment.domain + `/games`)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            }),
+          )
+        )
+      )
+      .subscribe(res => {
+        let data = <any>res;
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].name.toLowerCase().includes(this.searchItems.value)) {
+            this.filteredItems.push(data[i]);
+          }
+        }
+        if (this.filteredItems[0] == undefined) {
+          this.isFilteredItemsNull = true;
+        }
+        if (this.searchItems.value == '') {
+          this.items = this.data;
+          this.isFilteredItemsNull = false;
+          return;
+        }
+
+        this.items = this.filteredItems;
+      });
   }
 
   addToCart(item: CartItem) {
@@ -55,16 +104,6 @@ export class StoreListComponent implements OnInit {
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);
 
-  }
-
-  search(){
-    console.log("sss");
-    // this.cartItem.pipe(debounceTime(1000))
-    // .subscribe(
-    //   res => {
-    //     console.log(res);
-    //   })
-    this.searchText1 = this.searchText;
   }
 
   goToGameDetails(item) {

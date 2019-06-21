@@ -14,7 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { UserInfoService } from './services/user-info-service.service';
 import { StoreListComponent } from './store-list/store-list.component';
 import { DataTableComponent } from './data-table/data-table.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule, MatDialog, MatDialogModule, MatButtonModule, MatMenuModule, MatCardModule, MatToolbarModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatDialog, MatDialogModule, MatButtonModule, MatMenuModule, MatCardModule, MatToolbarModule, MatIconModule, MatInputModule, MatSnackBar, MatSnackBarModule } from '@angular/material';
 import { ItemsDataTableComponent } from './items-data-table/items-data-table.component';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { AuthServiceService } from './services/auth-service.service';
@@ -27,6 +27,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { UserInfoPageComponent } from './user-info-page/user-info-page.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SearchService } from './services/search.service';
+import { TestComponentComponent } from './test-component/test-component.component';
+import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -45,7 +50,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     PageNotFoundComponent,
     ItemDetailComponent,
     UserInfoPageComponent,
-    FilterPipe
+    FilterPipe,
+    TestComponentComponent
   ],
   imports: [
     BrowserModule,
@@ -63,13 +69,19 @@ import { FilterPipe } from './pipes/filter.pipe';
     MatButtonModule,
     MatDialogModule,
     MatInputModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    HttpClientModule,
   ],
   providers: [
     UserInfoService, 
     AuthServiceService, 
     HttpRequestService, 
     Extensions,
+    SearchService,
+    
+    HttpClient, 
   ],
   bootstrap: [AppComponent],
   entryComponents: [EditModalComponent, CreateNewItemModalComponent]

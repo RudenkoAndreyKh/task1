@@ -39,7 +39,6 @@ export class HeaderComponent implements OnInit {
       (user: User) => {
         this.userFirstName = user.firstName;
         this.userAvatar = user.image;
-        console.log(this.userAvatar);
       });
 
     if (localStorage.getItem('ShoppingCart') !== null) {

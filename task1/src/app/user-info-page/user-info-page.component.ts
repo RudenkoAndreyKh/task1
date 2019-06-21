@@ -5,6 +5,7 @@ import { HeaderService } from '../services/header-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from '../models/User';
 import { HttpRequestService } from '../services/http-request.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-info-page',
@@ -22,7 +23,7 @@ export class UserInfoPageComponent implements OnInit {
   userChangeForm: FormGroup;
   submitted = false;
 
-  constructor(private Auth: AuthServiceService, private httpReq: HttpRequestService, private router: Router, private headerService: HeaderService) { }
+  constructor(private Auth: AuthServiceService, private httpReq: HttpRequestService, private router: Router, private headerService: HeaderService, private _snackBar: MatSnackBar) { }
 
   async ngOnInit() {
     this.userChangeForm = new FormGroup({
@@ -68,6 +69,7 @@ export class UserInfoPageComponent implements OnInit {
           localStorage.setItem('userFirstName', res.data.firstName);
           localStorage.setItem('userLastName', res.data.lastName);
           localStorage.setItem('userAvatar', res.data.image);
+          this._snackBar.open('Your info updated', '' ,{duration: 2000});
         })
     }
     return;

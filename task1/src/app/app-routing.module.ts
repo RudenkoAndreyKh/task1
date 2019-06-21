@@ -8,6 +8,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { UserInfoPageComponent } from './user-info-page/user-info-page.component';
+import { TestComponentComponent } from './test-component/test-component.component';
 
 const routes: Routes = [
   { path: 'registration', component: AuthPageComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'game-details/:id', component: ItemDetailComponent },
   { path: 'user-page', component: UserInfoPageComponent },
+  {path: 'test-page', component: TestComponentComponent},
   { path: '', component: MainPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ]
