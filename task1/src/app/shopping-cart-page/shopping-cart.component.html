@@ -1,0 +1,21 @@
+<div class="shoppingCartPage">
+    <div class="container">
+        <div class="shoppingCart">
+            <ul>
+                <li class="listElement" *ngFor="let cartItem of cartItem">
+                    <div class="listEl" (click)="goToItemDetails(cartItem.id);"><img src="{{cartItem.image}}"
+                            alt="{{cartItem.name}}">{{cartItem.name}} <span
+                            class="badge badge-secondary">{{cartItem.quantity}}</span> <span
+                            class="priceAndDelete">Price:
+                            {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
+                                    class="fas fa-times"></i></button></span> </div>
+                </li>
+            </ul>
+            <div class="cartBtnsLayout">
+                <span class="totalCost">Total cost: {{totalCost}}</span>
+                <button (click)="clearAllCartItems();" mat-button class="clearAllItems">Clear</button>
+                <button mat-button class="buyButton">Buy</button>
+            </div>
+        </div>
+    </div>
+</div>

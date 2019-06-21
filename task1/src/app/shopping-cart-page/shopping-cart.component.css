@@ -1,0 +1,125 @@
+.container {
+    height: calc(100vh - 3.5em);
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.shoppingCart {
+    width: 100%;
+    height: calc(100% - 7em);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.shoppingCart ul::-webkit-scrollbar {
+    width: 10px;
+}
+
+.shoppingCart ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.shoppingCart ul::-webkit-scrollbar-thumb {
+    background: coral;
+}
+
+.shoppingCart ul::-webkit-scrollbar-thumb:hover {
+    background: coral;
+}
+
+.shoppingCart ul {
+    overflow: auto;
+    width: 100%;
+    height: 90%;
+    margin: 0;
+    list-style: none;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 2px 0 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.listElement {
+    width: 100%;
+    height: 4em;
+    position: relative;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #666;
+    transition: 0.2s;
+}
+
+.listElement:hover {
+    background-color: #eee;
+}
+
+.listEl {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.listEl img {
+    height: 50px;
+    width: 50px;
+    margin-right: 20px;
+}
+
+.badge {
+    margin-left: 0.5em;
+    background-color: coral;
+}
+
+.priceAndDelete {
+    color: royalblue;
+    position: absolute;
+    right: 0px;
+}
+
+.listElement:nth-last-child(1) {
+    border-bottom: 0;
+}
+
+.deleteItem {
+    background-color: transparent;
+    border-radius: 5px;
+    border: 0;
+    color: #666;
+    margin-left: 0.3em;
+    transition: 0.2s;
+}
+
+.deleteItem:hover {
+    color: coral;
+}
+
+.cartBtnsLayout {
+    width: 100%;
+    height: 2.5em;
+    display: flex;
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.totalCost {
+    color: royalblue;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clearAllItems {
+    width: 40%;
+    height: 100%;
+}
+
+.buyButton {
+    width: 40%;
+    height: 100%;
+}

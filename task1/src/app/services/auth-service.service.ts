@@ -47,26 +47,7 @@ export class AuthServiceService {
   }
 
   deleteUser(id) {
-    debugger;
-    console.log(environment.domain+`/users/${id}`);
-    axios.delete(environment.domain+`/users/${id}`)
-  }
-
-  getAllUsers() {
-    let data = {};
-    axios.get(environment.domain+'/users')
-      .then(res => {
-        data = res;
-      })
-  }
-
-  async getAllGames() {
-    let data = {};
-    await axios.get(environment.domain+'/games')
-      .then(res => {
-        data = res;
-      })
-    return <any>data;
+    return axios.delete(environment.domain+`/users/${id}`)
   }
 
 }

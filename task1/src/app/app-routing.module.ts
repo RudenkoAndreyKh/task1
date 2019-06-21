@@ -9,6 +9,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { UserInfoPageComponent } from './user-info-page/user-info-page.component';
 import { TestComponentComponent } from './test-component/test-component.component';
+import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.component';
 
 const routes: Routes = [
   { path: 'registration', component: AuthPageComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'game-details/:id', component: ItemDetailComponent },
   { path: 'user-page', component: UserInfoPageComponent },
   {path: 'test-page', component: TestComponentComponent},
+  {path: 'order-page', component: ShoppingCartComponent},
   { path: '', component: MainPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ]

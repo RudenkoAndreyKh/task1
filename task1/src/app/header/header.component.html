@@ -14,13 +14,13 @@
       <div class="greetingLayout">
         <li class="nav-item">
           <button (click)="shoppingCart = !shoppingCart" class="nav-link shoppingCartBtnToggle"><i
-              class="fas fa-shopping-cart"></i> Shopping cart</button>
+              class="fas fa-shopping-cart"></i> Shopping cart <span class="totalCost">{{totalCost+' $'}}</span></button>
           <div class="shoppingCart" *ngIf="shoppingCart">
             <ul>
               <li class="listElement" *ngFor="let cartItem of cartItem">
                 <div class="listEl" (click)="goToItemDetails(cartItem.id);">{{cartItem.name}} <span
                     class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
-                    {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
+                    {{cartItem.price*cartItem.quantity+' $'}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
                         class="fas fa-times"></i></button></span> </div>
               </li>
             </ul>

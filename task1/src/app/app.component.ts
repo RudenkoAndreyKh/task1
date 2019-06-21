@@ -14,10 +14,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
   isLoggedIn = false;
   constructor(private userInfoService: UserInfoService, private headerService: HeaderService, private Auth: AuthServiceService) {
 
-    this.headerService.isUserLoggedInAnnounced$.subscribe(
-      (isLoggedIn) => {
-        this.isLoggedIn = isLoggedIn;
-      });
+
   }
   ngOnInit() {
     this.headerService.isUserLoggedInAnnounced$.subscribe(

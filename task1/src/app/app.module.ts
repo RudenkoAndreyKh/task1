@@ -32,6 +32,7 @@ import { TestComponentComponent } from './test-component/test-component.componen
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ItemDetailComponent,
     UserInfoPageComponent,
     FilterPipe,
-    TestComponentComponent
+    TestComponentComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,

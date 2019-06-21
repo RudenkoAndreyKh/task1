@@ -47,6 +47,10 @@
     border: 1px solid coral;
 }
 
+.totalCost{
+    color: royalblue;
+}
+
 .shoppingCart {
     width: 350px;
     height: 450px;
