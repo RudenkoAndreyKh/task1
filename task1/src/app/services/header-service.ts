@@ -12,4 +12,11 @@ export class HeaderService{
     announcedisUserLoggedIn(isUserLoggedIn:boolean){
         this.isUserLoggedIn.next(isUserLoggedIn)
     }
+
+    private isNotLoggedInUser = new Subject<boolean>();
+    isNotLoggedInUserAnnounced$ = this.isNotLoggedInUser;
+
+    announcedisNotLoggedInUser(isNotLoggedInUser:boolean){
+        this.isNotLoggedInUser.next(isNotLoggedInUser)
+    }
 } 

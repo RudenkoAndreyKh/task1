@@ -7,11 +7,12 @@ import { Extensions } from '../services/extensions.service';
 import { Router } from '@angular/router';
 
 import { FormControl } from '@angular/forms';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import axios from 'axios';
 
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { HttpRequestService } from '../services/http-request.service';
 
 
 @Component({
@@ -32,12 +33,12 @@ export class StoreListComponent implements OnInit {
   currItem: Item;
 
   isFilteredItemsNull: boolean = false;
-  constructor(private router: Router, private Auth: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions, private http: HttpClient) {
+  constructor(private router: Router, private httpReq: HttpRequestService, private authService: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions, private http: HttpClient) {
 
   }
 
   async ngOnInit() {
-    await this.Auth.getAllGames()
+    await this.httpReq.getAllGames()
       .then(res => {
         this.items = res.data;
         this.data = res.data;
@@ -89,7 +90,6 @@ export class StoreListComponent implements OnInit {
     if (localStorage.getItem('ShoppingCart') !== null) {
       let data = JSON.parse(localStorage.getItem('ShoppingCart'));
       if (this.ext.filterId(item, data) + 1) {
-        console.log("id already exist");
         this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
         this.cartItem[this.ext.filterId(item, data)].quantity += 1;
         localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
@@ -99,7 +99,6 @@ export class StoreListComponent implements OnInit {
     }
     item.quantity = 1;
 
-    console.log("item created", item);
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);

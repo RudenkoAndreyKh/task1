@@ -3,6 +3,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AuthServiceService } from '../services/auth-service.service'
 import { User } from '../models/User';
 import { Router } from '@angular/router';
+import {environment} from '../../environments/environment'
 
 @Component({
   selector: 'app-auth-page',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth-page.component.css']
 })
 export class AuthPageComponent implements OnInit {
-  title = 'Auth Page';
+  title = 'authService Page';
 
   registerForm: FormGroup;
   submitted = false;
@@ -19,7 +20,7 @@ export class AuthPageComponent implements OnInit {
 
   public userModel: User;
 
-  constructor(private router: Router, private Auth: AuthServiceService) {
+  constructor(private router: Router, private authService: AuthServiceService) {
   }
 
   async ngOnInit() {
@@ -29,7 +30,7 @@ export class AuthPageComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     })
-    await this.Auth.isLoggedIn().then(res => {
+    await this.authService.isLoggedIn().then(res => {
       this.isLoggedIn = res;
     })
     if (this.isLoggedIn) {
@@ -47,7 +48,7 @@ export class AuthPageComponent implements OnInit {
       return;
     }
     
-    this.Auth.addNewUser(<User>{ email: this.registerForm.value.email, firstName: this.registerForm.value.firstName, lastName: this.registerForm.value.lastName, password: this.registerForm.value.password, image: 'https://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png' });
+    this.authService.addNewUser(<User>{ email: this.registerForm.value.email, firstName: this.registerForm.value.firstName, lastName: this.registerForm.value.lastName, password: this.registerForm.value.password, image: environment.defaultImage });
     this.router.navigate(['']);
   }
 

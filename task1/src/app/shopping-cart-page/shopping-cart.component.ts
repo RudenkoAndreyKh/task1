@@ -19,10 +19,10 @@ export class ShoppingCartComponent implements OnInit {
 
   totalCost = 0;
 
-  constructor(private Auth: AuthServiceService, private router: Router, private headerService: HeaderService, private cartUpdate: CartUpdateService, private ext: Extensions) { }
+  constructor(private authService: AuthServiceService, private router: Router, private headerService: HeaderService, private cartUpdate: CartUpdateService, private ext: Extensions) { }
 
   async ngOnInit() {
-    await this.Auth.isLoggedIn().then(res => {
+    await this.authService.isLoggedIn().then(res => {
       this.isLoggedIn = res;
     })
     if (!this.isLoggedIn) {

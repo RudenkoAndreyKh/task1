@@ -4,17 +4,21 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { HttpRequestService } from '../services/http-request.service';
 import { TableUpdateService } from '../services/update-table.service';
 import { ItemsDataTableItem } from '../items-data-table/items-data-table-datasource';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-create-new-item-modal',
   templateUrl: './create-new-item-modal.component.html',
   styleUrls: ['./create-new-item-modal.component.css']
 })
-export class CreateNewItemModalComponent implements OnInit{
+export class CreateNewItemModalComponent implements OnInit {
 
   addItemForm: FormGroup;
 
-  constructor(private matDialogRef: MatDialogRef<CreateNewItemModalComponent>, @Inject(MAT_DIALOG_DATA) public item: any, private httpReq: HttpRequestService, private updateTable: TableUpdateService) { }
+  imgResultBeforeCompress: string;
+  imgResultAfterCompress: string;
+
+  constructor(private matDialogRef: MatDialogRef<CreateNewItemModalComponent>, private imageCompress: NgxImageCompressService, @Inject(MAT_DIALOG_DATA) public item: any, private httpReq: HttpRequestService, private updateTable: TableUpdateService) { }
 
   ngOnInit() {
     this.addItemForm = new FormGroup({
@@ -30,16 +34,33 @@ export class CreateNewItemModalComponent implements OnInit{
   }
 
   public async add(newItem) {
-    // this.item.add(newItem);
+    this.addItemForm.value.image = this.imgResultAfterCompress;
     var result = await this.httpReq.addItem(newItem);
-    if(result.status === 201){
-     
-      let dataSource:any = await <any>this.httpReq.getAllGames();
+    if (result.status === 201) {
+
+      let dataSource: any = await <any>this.httpReq.getAllGames();
       debugger;
       this.updateTable.announcedTableUpdate(dataSource.data);
       this.matDialogRef.close();
     }
-   
+
+  }
+
+  compressFile() {
+
+    this.imageCompress.uploadFile().then(({ image, orientation }) => {
+
+      this.imgResultBeforeCompress = image;
+      console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+
+      this.imageCompress.compressFile(image, orientation, 50, 50).then(
+        result => {
+          this.imgResultAfterCompress = result;
+          console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
+        }
+      );
+
+    });
   }
 
 }

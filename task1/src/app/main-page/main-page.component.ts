@@ -9,19 +9,16 @@ import { HeaderService } from '../services/header-service';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-  isLoggedIn = false;
-  constructor(private router:Router, private headerService: HeaderService, private Auth: AuthServiceService) {
+  isLoggedIn = true;
+  isNotLoggedInUser = true;
+  constructor(private router:Router, private headerService: HeaderService, private authService: AuthServiceService) {
+    this.headerService.announcedisNotLoggedInUser(this.isNotLoggedInUser);
   }
 
   async ngOnInit() {
-    await this.Auth.isLoggedIn().then(res => {
+    await this.authService.isLoggedIn().then(res => {
       this.isLoggedIn = res;
     })
-    if (!this.isLoggedIn) {
-      this.router.navigate(['login']).then(() => {
-        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-      });
-    }
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
   }
 

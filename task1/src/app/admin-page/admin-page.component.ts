@@ -12,12 +12,12 @@ import { AuthServiceService } from '../services/auth-service.service';
 export class AdminPageComponent implements OnInit {
 
   isLoggedIn = false;
-  constructor(private router: Router, private headerService: HeaderService, private Auth: AuthServiceService) {
+  constructor(private router: Router, private headerService: HeaderService, private authService: AuthServiceService) {
 
   }
 
   async ngOnInit() {
-    await this.Auth.isLoggedIn().then(res => {
+    await this.authService.isLoggedIn().then(res => {
       this.isLoggedIn = res;
     })
     if (!this.isLoggedIn) {

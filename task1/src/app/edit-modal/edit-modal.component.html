@@ -5,16 +5,13 @@
     <mat-form-field class="example-full-width mr-md-3">
       <input formControlName="name" matInput placeholder="item name" value="{{item.name}}">
     </mat-form-field>
-    <mat-form-field class="example-full-width mr-md-3">
-      <input formControlName="image" matInput placeholder="item image" value="{{item.image}}">
-    </mat-form-field>
-
-    <div class="example-full-width imageLayout">
-      <img width="50%" src="{{item.image}}" alt="{{item.name}}">
-    </div>
+    
+    <button type="button" (click)="compressFile()">Upload and compress Image</button>
+    <img *ngIf="imgResultAfterCompress" width="100%" [src]="imgResultAfterCompress" alt="">
 
     <mat-form-field class="example-full-width mr-md-3">
-      <textarea formControlName="description" matInput placeholder="item description" value="{{item.description}}"></textarea>
+      <textarea formControlName="description" matInput placeholder="item description"
+        value="{{item.description}}"></textarea>
     </mat-form-field>
 
     <mat-form-field class="example-full-width mr-md-3">
@@ -25,5 +22,5 @@
 </div>
 <div mat-dialog-actions>
   <button (click)="closeModal();" mat-button>Cancle editing</button>
-  <button (click)="edit(editItemForm, item.id);" mat-button>Edit</button>
+  <button (click)="editItem(editItemForm, item.id);" mat-button>Edit</button>
 </div>

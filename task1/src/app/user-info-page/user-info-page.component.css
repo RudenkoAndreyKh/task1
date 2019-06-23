@@ -1,10 +1,11 @@
 .userInfoPage {
     width: 100%;
-    background: url(../../images/background.png) top right no-repeat / cover;
+    min-height: calc(100vh - 3.5em);
+    background: url(../../images/background.png) top right repeat-y / cover;
 }
 
 .container {
-    height: calc(100vh - 3.5em);
+    min-height: calc(100vh - 3.5em);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -13,4 +14,5 @@
 
 .btn {
     width: 100%;
+    margin-bottom: 2em;
 }

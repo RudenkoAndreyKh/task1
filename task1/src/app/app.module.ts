@@ -33,6 +33,11 @@ import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http'
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.component';
+import { AuthGuard } from './guards/auth-guard.service';
+import { AdminGuard } from './guards/admin-guard.service';
+
+import { NgxImageCompressService } from 'ngx-image-compress';
+import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +58,8 @@ import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.compon
     UserInfoPageComponent,
     FilterPipe,
     TestComponentComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    EditUserModalComponent
   ],
   imports: [
     BrowserModule,
@@ -82,10 +88,12 @@ import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.compon
     HttpRequestService, 
     Extensions,
     SearchService,
-    
+    AuthGuard,
+    AdminGuard,
     HttpClient, 
+    NgxImageCompressService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [EditModalComponent, CreateNewItemModalComponent]
+  entryComponents: [EditModalComponent, CreateNewItemModalComponent, EditUserModalComponent]
 })
 export class AppModule { }

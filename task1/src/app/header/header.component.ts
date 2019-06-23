@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 import { CartItem } from '../models/CartItem';
 import { CartUpdateService } from '../services/cart-update.service';
+import { AdminCheck } from '../services/admin-check.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,16 +23,27 @@ export class HeaderComponent implements OnInit {
   userAvatar = '';
   shoppingCart = false;
   cartItem: CartItem[] = [];
+  isLoggedIn = false;
+  loggedAsAdmin = false;
 
   totalCost = 0;
 
 
-  constructor(private router: Router, private userInfo: UserInfoService, private cartUpdate: CartUpdateService, private headerService: HeaderService, private Auth: AuthServiceService) {
-
+  constructor(private router: Router, private adminCheck: AdminCheck, private userInfo: UserInfoService, private cartUpdate: CartUpdateService, private headerService: HeaderService, private authService: AuthServiceService) {
+    this.headerService.isUserLoggedInAnnounced$.subscribe(
+      isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
+      }
+    )
+    this.adminCheck.isUserLoggedInAsAdminAnnounced$.subscribe(
+      isAdmin => {
+        this.loggedAsAdmin = isAdmin;
+      }
+    )
   }
 
   logout() {
-    this.Auth.logout();
+    this.authService.logout();
     this.headerService.announcedisUserLoggedIn(false);
     return this.router.navigate(['login']);
   }
@@ -42,6 +54,11 @@ export class HeaderComponent implements OnInit {
         this.userFirstName = user.firstName;
         this.userAvatar = user.image;
       });
+    this.adminCheck.isUserLoggedInAsAdminAnnounced$.subscribe(
+      isAdmin => {
+        this.loggedAsAdmin = isAdmin;
+      }
+    )
 
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));

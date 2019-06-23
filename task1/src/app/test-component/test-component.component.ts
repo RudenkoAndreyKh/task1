@@ -49,11 +49,6 @@ export class TestComponentComponent implements OnInit {
             this.filteredItems.push(data[i]);
           }
         }
-        // console.log("data",res);
-        //   this.errorMsg = "";
-        //   this.filteredItems = res;
-
-        console.log(this.filteredItems);
       });
   }
 

@@ -7,6 +7,9 @@ import { User } from '../models/User';
 import { HttpRequestService } from '../services/http-request.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { NgxImageCompressService } from 'ngx-image-compress';
+import { DOC_ORIENTATION } from 'ngx-image-compress/lib/image-compress';
+
 @Component({
   selector: 'app-user-info-page',
   templateUrl: './user-info-page.component.html',
@@ -24,19 +27,23 @@ export class UserInfoPageComponent implements OnInit {
   submitted = false;
 
   public imagePath;
-  imgURL: any;
+  imgPath: any;
   public imageError: string;
+  imgResultBeforeCompress: string;
+  imgResultAfterCompress: string = localStorage.userAvatar;
 
-  constructor(private Auth: AuthServiceService, private httpReq: HttpRequestService, private router: Router, private headerService: HeaderService, private _snackBar: MatSnackBar) { }
+  constructor(private authService: AuthServiceService, private imageCompress: NgxImageCompressService, private httpReq: HttpRequestService, private router: Router, private headerService: HeaderService, private _snackBar: MatSnackBar) {
+
+   }
 
   async ngOnInit() {
     this.userChangeForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      image: new FormControl('')
+      firstName: new FormControl(localStorage.userFirstName, Validators.required),
+      lastName: new FormControl(localStorage.userLastName, Validators.required),
+      image: new FormControl(localStorage.userAvatar)
     })
 
-    await this.Auth.isLoggedIn().then(res => {
+    await this.authService.isLoggedIn().then(res => {
       this.isLoggedIn = res;
     })
     if (!this.isLoggedIn) {
@@ -48,12 +55,14 @@ export class UserInfoPageComponent implements OnInit {
 
     await this.httpReq.getAllUsers()
       .then(res => {
-        for (let i = 0; i < res.data.length; i++) {
-          console.log(res.data[i].id);
-          if (res.data[i].email == localStorage.getItem('userEmail')) this.data = res.data[i];
-          console.log(this.data);
-          break;
-        }
+        res.data.map(user => {
+          if (user.email == localStorage.getItem('userEmail')) {
+            this.data = user;
+            return;
+          };
+        })
+
+
       })
   }
 
@@ -66,35 +75,33 @@ export class UserInfoPageComponent implements OnInit {
     if (!this.userChangeForm.invalid) {
       this.data.firstName = this.userChangeForm.value.firstName;
       this.data.lastName = this.userChangeForm.value.lastName;
-      if (this.userChangeForm.value.image != '') this.data.image = this.userChangeForm.value.image;
-      console.log(this.data);
+      if (this.imgResultAfterCompress == undefined) this.data.image = this.data.image;
+      else this.data.image = this.imgResultAfterCompress;
       await this.httpReq.changeUserInfo(this.data)
         .then(res => {
           localStorage.setItem('userFirstName', res.data.firstName);
           localStorage.setItem('userLastName', res.data.lastName);
-          localStorage.setItem('userAvatar', this.imgURL);
+          localStorage.setItem('userAvatar', this.imgResultAfterCompress);
           this._snackBar.open('Your info updated', '', { duration: 2000 });
         })
     }
     return;
   }
 
-  preview(files) {
-    if (files.length === 0)
-      return;
+  compressFile() {
 
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.imageError = "Only images are supported.";
-      return;
-    }
+    this.imageCompress.uploadFile().then(({ image, orientation }) => {
 
-    var reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.imgURL = reader.result;
-    }
+      this.imgResultBeforeCompress = image;
+      console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
+
+      this.imageCompress.compressFile(image, orientation, 50, 50).then(
+        result => {
+          this.imgResultAfterCompress = result;
+          console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
+        }
+      );
+
+    });
   }
-
 }

@@ -18,7 +18,6 @@ input{
     padding-top: 4em;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
 }
 
 .itemCard {

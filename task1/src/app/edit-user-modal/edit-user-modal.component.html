@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Editing {{user.name}}</h1>
+<div mat-dialog-content>
+
+  <form [formGroup]="editUserForm">
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="firstName" matInput placeholder="user first name" value="{{user.firstName}}">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="lastName" matInput placeholder="user last name" value="{{user.lastName}}"/>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="email" matInput placeholder="user email" value="{{user.email}}"/>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width mr-md-3">
+      <input formControlName="password" matInput placeholder="user password" value="{{user.password}}"/>
+    </mat-form-field>
+
+    <button type="button" (click)="compressFile()">Upload and compress Image</button>
+    <img *ngIf="imgResultAfterCompress" width="100%" [src]="imgResultAfterCompress" alt="">
+  </form>
+
+</div>
+<div mat-dialog-actions>
+  <button (click)="closeModal();" mat-button>Cancle editing</button>
+  <button (click)="editUser(editUserForm);" mat-button>Edit</button>
+</div>

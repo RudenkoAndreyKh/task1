@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTable, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTable, MatTableDataSource, MatDialog } from '@angular/material';
 import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { AuthServiceService } from '../services/auth-service.service';
 import axios from 'axios';
 import { environment } from '../../environments/environment';
 import { TableUpdateService } from '../services/update-table.service';
+import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 
 @Component({
   selector: 'app-data-table',
@@ -20,7 +21,7 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'firstName', 'lastName', 'email', 'actions'];
 
-  constructor(private Auth: AuthServiceService, private updateTable: TableUpdateService) {
+  constructor(private authService: AuthServiceService, private updateTable: TableUpdateService, public dialog: MatDialog, ) {
     this.dataSource = new DataTableDataSource();
   }
 
@@ -43,7 +44,7 @@ export class DataTableComponent implements AfterViewInit, OnInit {
   }
 
   deleteUser(userId) {
-    this.Auth.deleteUser(userId)
+    this.authService.deleteUser(userId)
       .then(res => {
         let dataSource = this.dataSource.data;
         for (let i = 0; i < dataSource.length; i++) {
@@ -55,11 +56,10 @@ export class DataTableComponent implements AfterViewInit, OnInit {
         this.dataSource.data = dataSource;
         this.table.dataSource = new MatTableDataSource<DataTableItem>(dataSource);
       })
-    console.log("succesfully deletet", userId);
   }
 
-  editUser(userId) {
-    console.log("succesfully edited", userId);
+  editUser(user) {
+    this.dialog.open(EditUserModalComponent, { width: '450px', data: user });
   }
 
   ngAfterViewInit() {

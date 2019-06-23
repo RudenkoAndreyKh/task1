@@ -20,8 +20,8 @@
       </div>
       <div class="form-group">
         <label>Your avatar</label>
-        <input #file type="file" accept='image/*' (change)="preview(file.files)" />
-        <img [src]="imgURL" height="200" *ngIf="imgURL">
+        <button type="button" (click)="compressFile()">Upload and compress Image</button>
+        <img *ngIf="imgResultAfterCompress" width="100%" [src]="imgResultAfterCompress" alt="">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

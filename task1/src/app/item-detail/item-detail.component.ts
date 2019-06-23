@@ -24,7 +24,7 @@ export class ItemDetailComponent implements OnInit {
   private id: number;
   private routeSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private cartUpdate: CartUpdateService, private ext: Extensions, private headerService: HeaderService, private Auth: AuthServiceService, private httpReq: HttpRequestService) {
+  constructor(private route: ActivatedRoute, private router: Router, private cartUpdate: CartUpdateService, private ext: Extensions, private headerService: HeaderService, private authService: AuthServiceService, private httpReq: HttpRequestService) {
 
     this.routeSubscription = route.params.subscribe((params: Item) => {
       this.id = params['id'];
@@ -33,7 +33,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.Auth.isLoggedIn().then(res => {
+    await this.authService.isLoggedIn().then(res => {
       this.isLoggedIn = res;
     })
     if (!this.isLoggedIn) {
@@ -57,7 +57,6 @@ export class ItemDetailComponent implements OnInit {
     if (localStorage.getItem('ShoppingCart') !== null) {
       let data = JSON.parse(localStorage.getItem('ShoppingCart'));
       if (this.ext.filterId(item, data) + 1) {
-        console.log("id already exist");
         this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
         this.cartItem[this.ext.filterId(item, data)].quantity += 1;
         localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
@@ -66,7 +65,6 @@ export class ItemDetailComponent implements OnInit {
       }
     }
     item.quantity = 1;
-    console.log("item created", item);
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);

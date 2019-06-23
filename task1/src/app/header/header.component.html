@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light ">
+<nav class="navbar navbar-expand-lg navbar-light container">
   <a class="navbar-brand" routerLink="/">Brand</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,11 +7,15 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto navigationBar">
-      <li class="nav-item">
+      <li *ngIf="loggedAsAdmin" class="nav-item">
         <a class="nav-link" routerLink="/admin">Admin</a>
       </li>
 
-      <div class="greetingLayout">
+      <li *ngIf="!isLoggedIn" class="nav-item greetingLayout">
+        <a class="nav-link" routerLink="/registration">Sing up</a>
+      </li>
+
+      <div *ngIf="isLoggedIn" class="greetingLayout">
         <li class="nav-item">
           <button (click)="shoppingCart = !shoppingCart" class="nav-link shoppingCartBtnToggle"><i
               class="fas fa-shopping-cart"></i> Shopping cart <span class="totalCost">{{totalCost+' $'}}</span></button>
@@ -20,8 +24,8 @@
               <li class="listElement" *ngFor="let cartItem of cartItem">
                 <div class="listEl" (click)="goToItemDetails(cartItem.id);">{{cartItem.name}} <span
                     class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
-                    {{cartItem.price*cartItem.quantity+' $'}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
-                        class="fas fa-times"></i></button></span> </div>
+                    {{cartItem.price*cartItem.quantity+' $'}} <button (click)="deleteItem(cartItem);"
+                      class="deleteItem"><i class="fas fa-times"></i></button></span> </div>
               </li>
             </ul>
             <div class="cartBtns">
