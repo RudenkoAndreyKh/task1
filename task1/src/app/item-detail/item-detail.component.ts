@@ -16,16 +16,20 @@ import { CartUpdateService } from '../services/cart-update.service';
   styleUrls: ['./item-detail.component.css']
 })
 export class ItemDetailComponent implements OnInit {
-
   item: Item;
   isLoggedIn = false;
   cartItem: CartItem[] = [];
-
   private id: number;
   private routeSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, private cartUpdate: CartUpdateService, private ext: Extensions, private headerService: HeaderService, private authService: AuthServiceService, private httpReq: HttpRequestService) {
-
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private cartUpdate: CartUpdateService,
+    private ext: Extensions,
+    private headerService: HeaderService,
+    private authService: AuthServiceService,
+    private httpReq: HttpRequestService) {
     this.routeSubscription = route.params.subscribe((params: Item) => {
       this.id = params['id'];
     });
@@ -53,8 +57,6 @@ export class ItemDetailComponent implements OnInit {
     }
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
-    }
-    if (localStorage.getItem('ShoppingCart') !== null) {
       let data = JSON.parse(localStorage.getItem('ShoppingCart'));
       if (this.ext.filterId(item, data) + 1) {
         this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
@@ -68,7 +70,6 @@ export class ItemDetailComponent implements OnInit {
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);
-
   }
 
 }

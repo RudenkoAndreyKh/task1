@@ -1,16 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthServiceService } from '../services/auth-service.service';
 import { Item } from '../models/Item';
 import { CartItem } from '../models/CartItem';
 import { CartUpdateService } from '../services/cart-update.service';
 import { Extensions } from '../services/extensions.service';
 import { Router } from '@angular/router';
-
 import { FormControl } from '@angular/forms';
-import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import axios from 'axios';
-
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { HttpRequestService } from '../services/http-request.service';
 
@@ -21,19 +17,22 @@ import { HttpRequestService } from '../services/http-request.service';
   styleUrls: ['./store-list.component.css']
 })
 export class StoreListComponent implements OnInit {
-
   searchItems = new FormControl();
   filteredItems: any;
   isLoading = false;
   errorMsg: string;
-
   data: Item[] = [];
   items: Item[] = [];
   cartItem: CartItem[] = [];
   currItem: Item;
 
   isFilteredItemsNull: boolean = false;
-  constructor(private router: Router, private httpReq: HttpRequestService, private authService: AuthServiceService, private cartUpdate: CartUpdateService, private ext: Extensions, private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private httpReq: HttpRequestService,
+    private cartUpdate: CartUpdateService,
+    private ext: Extensions,
+    private http: HttpClient) {
 
   }
 
@@ -66,15 +65,14 @@ export class StoreListComponent implements OnInit {
             this.filteredItems.push(data[i]);
           }
         }
-        if (this.filteredItems[0] == undefined) {
+        if (!this.filteredItems[0]) {
           this.isFilteredItemsNull = true;
         }
-        if (this.searchItems.value == '') {
+        if (!this.searchItems.value) {
           this.items = this.data;
           this.isFilteredItemsNull = false;
           return;
         }
-
         this.items = this.filteredItems;
       });
   }
@@ -86,8 +84,6 @@ export class StoreListComponent implements OnInit {
     }
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
-    }
-    if (localStorage.getItem('ShoppingCart') !== null) {
       let data = JSON.parse(localStorage.getItem('ShoppingCart'));
       if (this.ext.filterId(item, data) + 1) {
         this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
@@ -98,11 +94,9 @@ export class StoreListComponent implements OnInit {
       }
     }
     item.quantity = 1;
-
     this.cartItem.push(item);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);
-
   }
 
   goToGameDetails(item) {

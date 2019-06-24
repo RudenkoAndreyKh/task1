@@ -12,13 +12,12 @@ import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.compo
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.css']
 })
-export class DataTableComponent implements AfterViewInit, OnInit {
+export class DataTableComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatTable, { static: false }) table: MatTable<DataTableItem>;
-  dataSource: DataTableDataSource;
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  dataSource: DataTableDataSource;
   displayedColumns = ['id', 'firstName', 'lastName', 'email', 'actions'];
 
   constructor(private authService: AuthServiceService, private updateTable: TableUpdateService, public dialog: MatDialog, ) {
@@ -31,11 +30,8 @@ export class DataTableComponent implements AfterViewInit, OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.dataSource.data = res.data;
-
-
         this.table.dataSource = this.dataSource;
       })
-
     this.dataSource = new DataTableDataSource();
     this.updateTable.usersTableUpdateAnnounced$.subscribe(
       (data: DataTableItem[]) => {
@@ -62,7 +58,4 @@ export class DataTableComponent implements AfterViewInit, OnInit {
     this.dialog.open(EditUserModalComponent, { width: '450px', data: user });
   }
 
-  ngAfterViewInit() {
-
-  }
 }

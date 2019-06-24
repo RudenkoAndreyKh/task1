@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
-import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 
 @Component({
@@ -11,7 +10,10 @@ import { HeaderService } from '../services/header-service';
 export class MainPageComponent implements OnInit {
   isLoggedIn = true;
   isNotLoggedInUser = true;
-  constructor(private router:Router, private headerService: HeaderService, private authService: AuthServiceService) {
+  
+  constructor(
+    private headerService: HeaderService,
+    private authService: AuthServiceService) {
     this.headerService.announcedisNotLoggedInUser(this.isNotLoggedInUser);
   }
 

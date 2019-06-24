@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SearchService {
+
   baseUrl: string = 'https://api.cdnjs.com/libraries';
   queryUrl: string = '?search=';
 

@@ -7,6 +7,7 @@ import { HeaderService } from '../services/header-service';
 import { CartItem } from '../models/CartItem';
 import { CartUpdateService } from '../services/cart-update.service';
 import { AdminCheck } from '../services/admin-check.service';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,15 @@ export class HeaderComponent implements OnInit {
   cartItem: CartItem[] = [];
   isLoggedIn = false;
   loggedAsAdmin = false;
-
   totalCost = 0;
 
-
-  constructor(private router: Router, private adminCheck: AdminCheck, private userInfo: UserInfoService, private cartUpdate: CartUpdateService, private headerService: HeaderService, private authService: AuthServiceService) {
+  constructor(
+    private router: Router,
+    private adminCheck: AdminCheck,
+    private userInfo: UserInfoService,
+    private cartUpdate: CartUpdateService,
+    private headerService: HeaderService,
+    private authService: AuthServiceService) {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
       isLoggedIn => {
         this.isLoggedIn = isLoggedIn;
@@ -59,14 +64,12 @@ export class HeaderComponent implements OnInit {
         this.loggedAsAdmin = isAdmin;
       }
     )
-
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
       for (let i = 0; i < this.cartItem.length; i++) {
         this.totalCost += this.cartItem[i].price * this.cartItem[i].quantity;
       }
     };
-
     this.cartUpdate.CartUpdateAnnounced$.subscribe(
       (cart: CartItem[]) => {
         this.cartItem = cart;
@@ -113,7 +116,9 @@ export class HeaderComponent implements OnInit {
   filterId(item, data) {
     let result: number;
     for (let i = 0; i < data.length; i++) {
-      if (data[i].id == item.id) result = i;
+      if (data[i].id === item.id) {
+        result = i
+      };
     }
     return result;
   }

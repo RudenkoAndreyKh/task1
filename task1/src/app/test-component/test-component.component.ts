@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import axios from 'axios';
 
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 
@@ -12,17 +11,13 @@ import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
   styleUrls: ['./test-component.component.css']
 })
 export class TestComponentComponent implements OnInit {
-
   searchItems = new FormControl();
   filteredItems: any;
   isLoading = false;
   errorMsg: string;
   searchingValue: string;
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.searchItems.valueChanges

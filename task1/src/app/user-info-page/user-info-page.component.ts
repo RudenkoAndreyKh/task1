@@ -3,12 +3,9 @@ import { AuthServiceService } from '../services/auth-service.service';
 import { Router } from '@angular/router';
 import { HeaderService } from '../services/header-service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { User } from '../models/User';
 import { HttpRequestService } from '../services/http-request.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { NgxImageCompressService } from 'ngx-image-compress';
-import { DOC_ORIENTATION } from 'ngx-image-compress/lib/image-compress';
 
 @Component({
   selector: 'app-user-info-page',
@@ -16,25 +13,26 @@ import { DOC_ORIENTATION } from 'ngx-image-compress/lib/image-compress';
   styleUrls: ['./user-info-page.component.css']
 })
 export class UserInfoPageComponent implements OnInit {
-
   isLoggedIn = false;
-
   data;
-
   userId: number;
-
   userChangeForm: FormGroup;
   submitted = false;
-
   public imagePath;
   imgPath: any;
   public imageError: string;
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string = localStorage.userAvatar;
 
-  constructor(private authService: AuthServiceService, private imageCompress: NgxImageCompressService, private httpReq: HttpRequestService, private router: Router, private headerService: HeaderService, private _snackBar: MatSnackBar) {
+  constructor(
+    private authService: AuthServiceService,
+    private imageCompress: NgxImageCompressService,
+    private httpReq: HttpRequestService,
+    private router: Router,
+    private headerService: HeaderService,
+    private _snackBar: MatSnackBar) {
 
-   }
+  }
 
   async ngOnInit() {
     this.userChangeForm = new FormGroup({
@@ -52,7 +50,6 @@ export class UserInfoPageComponent implements OnInit {
       });
     }
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-
     await this.httpReq.getAllUsers()
       .then(res => {
         res.data.map(user => {
@@ -61,17 +58,13 @@ export class UserInfoPageComponent implements OnInit {
             return;
           };
         })
-
-
       })
   }
 
   get f() { return this.userChangeForm.controls; }
 
   async changeUser() {
-
     this.submitted = true;
-
     if (!this.userChangeForm.invalid) {
       this.data.firstName = this.userChangeForm.value.firstName;
       this.data.lastName = this.userChangeForm.value.lastName;
@@ -89,19 +82,15 @@ export class UserInfoPageComponent implements OnInit {
   }
 
   compressFile() {
-
     this.imageCompress.uploadFile().then(({ image, orientation }) => {
-
       this.imgResultBeforeCompress = image;
       console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
-
       this.imageCompress.compressFile(image, orientation, 50, 50).then(
         result => {
           this.imgResultAfterCompress = result;
           console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
         }
       );
-
     });
   }
 }

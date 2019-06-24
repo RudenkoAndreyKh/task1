@@ -12,14 +12,17 @@ import { Extensions } from '../services/extensions.service';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-
   isLoggedIn = false;
   cartItem: CartItem[] = [];
   shoppingCart = false;
-
   totalCost = 0;
 
-  constructor(private authService: AuthServiceService, private router: Router, private headerService: HeaderService, private cartUpdate: CartUpdateService, private ext: Extensions) { }
+  constructor(
+    private authService: AuthServiceService,
+    private router: Router,
+    private headerService: HeaderService,
+    private cartUpdate: CartUpdateService,
+    private ext: Extensions) { }
 
   async ngOnInit() {
     await this.authService.isLoggedIn().then(res => {

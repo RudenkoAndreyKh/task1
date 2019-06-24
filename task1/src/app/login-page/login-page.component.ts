@@ -3,7 +3,6 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AuthServiceService } from '../services/auth-service.service';
 import { User } from '../models/User';
 import { Router } from '@angular/router';
-import { UserInfoService } from '../services/user-info-service.service';
 import { HeaderService } from '../services/header-service';
 import { AdminCheck } from '../services/admin-check.service';
 
@@ -11,7 +10,6 @@ import { AdminCheck } from '../services/admin-check.service';
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
-
 })
 export class LoginPageComponent implements OnInit {
   title = "Login page"
@@ -21,7 +19,11 @@ export class LoginPageComponent implements OnInit {
   isLoggedIn = false;
   isNotLoggedInUser = false;
 
-  constructor(private router: Router, private adminCheck: AdminCheck, private userInfoService: UserInfoService, private headerService: HeaderService, private authService: AuthServiceService) {
+  constructor(
+    private router: Router,
+    private headerService: HeaderService,
+    private authService: AuthServiceService,
+    private adminCheck: AdminCheck) {
     this.headerService.announcedisNotLoggedInUser(this.isNotLoggedInUser);
   }
 
@@ -52,13 +54,13 @@ export class LoginPageComponent implements OnInit {
             localStorage.setItem("userFirstName", user.firstName);
             localStorage.setItem("userLastName", user.lastName);
             localStorage.setItem("userAvatar", user.image);
+            localStorage.setItem("userStatus", user.status);
+            if(localStorage.userStatus == 'admin')this.adminCheck.announcedisUserLoggedInAsAdmin(true);
             this.router.navigate(['']);
             return;
           };
         })
       })
-
-
   }
 
 }

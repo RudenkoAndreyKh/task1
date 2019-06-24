@@ -5,33 +5,17 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-    isAdmin = false;
+    isAdmin: string;
 
-    constructor(private _authService: AuthServiceService, private _router: Router) {
-
-    }
+    constructor(private _authService: AuthServiceService, private _router: Router) { }
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-        this.check();
-        if (this.isAdmin == false) {
+        this.isAdmin = localStorage.userStatus;
+        if (this.isAdmin != 'admin') {
             this._router.navigate(['/']);
-            return this.isAdmin;
+            return this.isAdmin == 'admin';
         }
-
-        return this.isAdmin;
-    }
-
-    async check() {
-        await this._authService.isAdmin()
-            .then(res => {
-                for (let i = 0; i < res.data.length; i++) {
-                    if (res.data[i].status != undefined && res.data[i].email == localStorage.userEmail) {
-                        this.isAdmin = true;
-                        break;
-                    };
-                }
-
-            })
+        return this.isAdmin == 'admin';
     }
 
 }

@@ -9,13 +9,7 @@ import { environment } from '../../environments/environment';
 export class AuthServiceService {
 
   addNewUser(userModel: User) {
-    axios.post(environment.domain + '/users', userModel)
-      .then(res => {
-        localStorage.setItem("userEmail", userModel.email);
-        localStorage.setItem("userFirstName", userModel.firstName);
-        localStorage.setItem("userLastName", userModel.lastName);
-        localStorage.setItem("userAvatar", userModel.image);
-      })
+    return axios.post(environment.domain + '/users', userModel);
   }
 
   async login() {
@@ -36,12 +30,7 @@ export class AuthServiceService {
           })
         })
     }
-
     return isLoggedIn;
-  }
-
-  isAdmin() {
-    return axios.get(environment.domain + '/users')
   }
 
   logout() {
@@ -50,6 +39,7 @@ export class AuthServiceService {
     localStorage.removeItem("userLastName");
     localStorage.removeItem("ShoppingCart");
     localStorage.removeItem("userAvatar");
+    localStorage.removeItem("userStatus");
   }
 
   deleteUser(id) {

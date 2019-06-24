@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { UserInfoService } from './services/user-info-service.service';
 import { User } from './models/User';
-import { AuthServiceService } from './services/auth-service.service';
 import { HeaderService } from './services/header-service';
 import { AdminCheck } from './services/admin-check.service';
 import { HttpRequestService } from './services/http-request.service';
@@ -15,11 +14,14 @@ export class AppComponent implements OnInit, AfterContentChecked {
   title = 'Main Page';
   isLoggedIn = false;
   isNotLoggedInUser = true;
-  isAdmin
-  constructor(private userInfoService: UserInfoService, private httpReq: HttpRequestService, private adminCheck: AdminCheck, private headerService: HeaderService, private authService: AuthServiceService) {
+  isAdmin = false;
 
+  constructor(
+    private userInfoService: UserInfoService,
+    private httpReq: HttpRequestService,
+    private adminCheck: AdminCheck,
+    private headerService: HeaderService, ) { }
 
-  }
   async ngOnInit() {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
       (isLoggedIn) => {
@@ -29,17 +31,13 @@ export class AppComponent implements OnInit, AfterContentChecked {
       (isNotLoggedInUser) => {
         this.isNotLoggedInUser = isNotLoggedInUser;
       });
-    await this.httpReq.getAllUsers()
-    .then(res => {
-      let data = res;
-      data.data.filter(user => {
-        if(user.status != undefined)this.adminCheck.announcedisUserLoggedInAsAdmin(true);
-      })
-    })
+
   }
 
   ngAfterContentChecked() {
     let user = <User>{ firstName: localStorage.getItem("userFirstName"), image: localStorage.getItem("userAvatar") };
     this.userInfoService.announcedUserInfo(user);
+    if (localStorage.userStatus == 'admin') this.isAdmin = true;
+    this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)
   }
 }

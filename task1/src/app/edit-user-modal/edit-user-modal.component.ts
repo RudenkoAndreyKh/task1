@@ -12,13 +12,16 @@ import { TableUpdateService } from '../services/update-table.service';
   styleUrls: ['./edit-user-modal.component.css']
 })
 export class EditUserModalComponent implements OnInit {
-
   editUserForm: FormGroup;
-
   imgResultBeforeCompress: string;
   imgResultAfterCompress: string;
 
-  constructor(private matDialogRef: MatDialogRef<CreateNewItemModalComponent>, private updateTable:TableUpdateService, private imageCompress: NgxImageCompressService, @Inject(MAT_DIALOG_DATA) public user: any, private httpReq: HttpRequestService) { }
+  constructor(
+    private matDialogRef: MatDialogRef<CreateNewItemModalComponent>,
+    private updateTable: TableUpdateService,
+    private imageCompress: NgxImageCompressService,
+    @Inject(MAT_DIALOG_DATA) public user: any,
+    private httpReq: HttpRequestService) { }
 
   ngOnInit() {
     this.editUserForm = new FormGroup({
@@ -35,7 +38,7 @@ export class EditUserModalComponent implements OnInit {
     this.matDialogRef.close();
   }
 
-  async editUser(user){
+  async editUser(user) {
     var result = await this.httpReq.changeUserInfo(user.value);
     if (result.status === 200) {
       let dataSource = await this.httpReq.getAllUsers();
@@ -46,19 +49,14 @@ export class EditUserModalComponent implements OnInit {
   }
 
   compressFile() {
-
     this.imageCompress.uploadFile().then(({ image, orientation }) => {
-
       this.imgResultBeforeCompress = image;
       console.warn('Size in bytes was:', this.imageCompress.byteCount(image));
-
       this.imageCompress.compressFile(image, orientation, 50, 50).then(
         result => {
           this.imgResultAfterCompress = result;
           console.warn('Size in bytes is now:', this.imageCompress.byteCount(result));
-        }
-      );
-
+        });
     });
   }
 

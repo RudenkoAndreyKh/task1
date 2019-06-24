@@ -5,15 +5,14 @@ import { environment } from '../../environments/environment';
 import { Extensions } from './extensions.service';
 import { TableUpdateService } from './update-table.service';
 import { User } from '../models/User';
+import { Item } from '../models/Item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpRequestService {
 
-  constructor(private ext: Extensions, private updateTable: TableUpdateService) {
-
-  }
+  constructor(private ext: Extensions, private updateTable: TableUpdateService) { }
 
   async getAllUsers() {
     return await axios.get(environment.domain + '/users');
@@ -31,21 +30,21 @@ export class HttpRequestService {
     return axios.delete(environment.domain + `/games/${id}/`);
   }
 
-  async editItem(item: FormGroup, id) {
+  async editItem(item: Item, id) {
     return await axios.put(environment.domain + `/games/${id}/`, {
-      name: item.value.name,
-      price: item.value.price,
-      image: item.value.image,
-      description: item.value.description
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      description: item.description
     });
   }
 
-  addItem(item: FormGroup) {
+  addItem(item: Item) {
     return axios.post(environment.domain + `/games`, {
-      name: item.value.name,
-      price: item.value.price,
-      image: item.value.image,
-      description: item.value.description
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      description: item.description
     });
 
   }
