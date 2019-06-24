@@ -1,4 +1,6 @@
-<div class="itemDetail">
+
+<div  *ngIf="isSpinnerRun" class="itemDetail"><app-spinner></app-spinner></div>
+<div  *ngIf="!isSpinnerRun" class="itemDetail">
   <div class="container" *ngIf="item != null">
     <div class="infoCard">
       <img src="{{item.image}}" alt="{{item.name}}">

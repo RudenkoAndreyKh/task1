@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn = false;
   loggedAsAdmin = false;
   totalCost = 0;
+  isAdmin = false;
 
   constructor(
     private router: Router,
@@ -64,6 +65,8 @@ export class HeaderComponent implements OnInit {
         this.loggedAsAdmin = isAdmin;
       }
     )
+    if (localStorage.userStatus == 'admin') this.isAdmin = true;
+    this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
       for (let i = 0; i < this.cartItem.length; i++) {

@@ -12,15 +12,16 @@ import { TestComponentComponent } from './test-component/test-component.componen
 import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.component';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AdminGuard } from './guards/admin-guard.service';
+import { NotAuthGuard } from './guards/not-auth-guard.service';
 
 const routes: Routes = [
   { path: 'registration', component: AuthPageComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminPageComponent, canActivate: [AdminGuard] },
+  { path: 'admin', component: AdminPageComponent, canActivate: [AdminGuard], loadChildren: './lazy-load.module#LazyLoadModule' },
   { path: 'login', component: LoginPageComponent },
   { path: 'game-details/:id', component: ItemDetailComponent },
-  { path: 'user-page', component: UserInfoPageComponent, canActivate: [AuthGuard] },
+  { path: 'user-page', component: UserInfoPageComponent, canActivate: [NotAuthGuard] },
   { path: 'test-page', component: TestComponentComponent, canActivate: [AdminGuard] },
-  { path: 'order-page', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'order-page', component: ShoppingCartComponent, canActivate: [NotAuthGuard] },
   { path: '', component: MainPageComponent },
   { path: '**', component: PageNotFoundComponent },
 ]

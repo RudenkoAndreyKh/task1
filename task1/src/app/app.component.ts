@@ -4,6 +4,7 @@ import { User } from './models/User';
 import { HeaderService } from './services/header-service';
 import { AdminCheck } from './services/admin-check.service';
 import { HttpRequestService } from './services/http-request.service';
+import { AuthServiceService } from './services/auth-service.service';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ export class AppComponent implements OnInit, AfterContentChecked {
     private userInfoService: UserInfoService,
     private httpReq: HttpRequestService,
     private adminCheck: AdminCheck,
-    private headerService: HeaderService, ) { }
+    private headerService: HeaderService,
+    private authService: AuthServiceService ) { }
 
   async ngOnInit() {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
@@ -31,7 +33,10 @@ export class AppComponent implements OnInit, AfterContentChecked {
       (isNotLoggedInUser) => {
         this.isNotLoggedInUser = isNotLoggedInUser;
       });
-
+      await this.authService.isLoggedIn().then(res => {
+        this.isLoggedIn = res;
+      })
+      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
   }
 
   ngAfterContentChecked() {

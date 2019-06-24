@@ -21,6 +21,7 @@ export class ItemDetailComponent implements OnInit {
   cartItem: CartItem[] = [];
   private id: number;
   private routeSubscription: Subscription;
+  isSpinnerRun: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +49,9 @@ export class ItemDetailComponent implements OnInit {
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
     await this.httpReq.getUserById(this.id).then(res => {
       this.item = res.data;
+      setTimeout(() => {
+        this.isSpinnerRun = false;
+      }, 2000);
     })
   }
 

@@ -38,15 +38,16 @@ import { AdminGuard } from './guards/admin-guard.service';
 
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
+import { LazyLoadModule } from './lazy-load.module';
+import { NotAuthGuard } from './guards/not-auth-guard.service';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
     AuthPageComponent,
     MainPageComponent,
     AdminPageComponent,
     LoginPageComponent,
-    HeaderComponent,
     StoreListComponent,
     DataTableComponent,
     ItemsDataTableComponent,
@@ -59,7 +60,8 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
     FilterPipe,
     TestComponentComponent,
     ShoppingCartComponent,
-    EditUserModalComponent
+    EditUserModalComponent,
+    SpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +83,7 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
     MatSnackBarModule,
     MatAutocompleteModule,
     HttpClientModule,
+    LazyLoadModule
   ],
   providers: [
     UserInfoService, 
@@ -91,7 +94,8 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
     AuthGuard,
     AdminGuard,
     HttpClient, 
-    NgxImageCompressService
+    NgxImageCompressService,
+    NotAuthGuard
   ],
   bootstrap: [AppComponent],
   entryComponents: [EditModalComponent, CreateNewItemModalComponent, EditUserModalComponent]
