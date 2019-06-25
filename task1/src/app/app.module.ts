@@ -29,7 +29,7 @@ import { UserInfoPageComponent } from './user-info-page/user-info-page.component
 import { FilterPipe } from './pipes/filter.pipe';
 import { SearchService } from './services/search.service';
 import { TestComponentComponent } from './test-component/test-component.component';
-import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ShoppingCartComponent } from './shopping-cart-page/shopping-cart.component';
@@ -40,6 +40,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 import { NotAuthGuard } from './guards/not-auth-guard.service';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { ParamInterceptor } from './interceptors/test.interceptor';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,12 @@ import { SpinnerComponent } from './spinner/spinner.component';
     AdminGuard,
     HttpClient, 
     NgxImageCompressService,
-    NotAuthGuard
+    NotAuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ParamInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [EditModalComponent, CreateNewItemModalComponent, EditUserModalComponent]

@@ -19,7 +19,6 @@ export class HttpRequestService {
 
   getAllUsers() {
     return this.http.get<User[]>(environment.domain + '/users');
-    //return await axios.get(environment.domain + '/users');
   }
 
   getAllGames() {
