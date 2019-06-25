@@ -16,10 +16,10 @@ import { NotAuthGuard } from './guards/not-auth-guard.service';
 
 const routes: Routes = [
   { path: 'registration', component: AuthPageComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminPageComponent, canActivate: [AdminGuard], loadChildren: './lazy-load.module#LazyLoadModule' },
+  { path: 'admin', canActivate: [AdminGuard], loadChildren: './admin-page/admin-page.module#AdminPageModule' },
   { path: 'login', component: LoginPageComponent },
   { path: 'game-details/:id', component: ItemDetailComponent },
-  { path: 'user-page', component: UserInfoPageComponent, canActivate: [NotAuthGuard] },
+  { path: 'user-page', canActivate: [NotAuthGuard], loadChildren: './user-info-page/user-info-page.module#UserInfoPageModule' },
   { path: 'test-page', component: TestComponentComponent, canActivate: [AdminGuard] },
   { path: 'order-page', component: ShoppingCartComponent, canActivate: [NotAuthGuard] },
   { path: '', component: MainPageComponent },

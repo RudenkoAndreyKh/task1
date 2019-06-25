@@ -18,8 +18,10 @@ export class AuthServiceService {
 
   async isLoggedIn() {
     let isLoggedIn: boolean = false;
-    let userEmail = localStorage.getItem("userEmail");
-    if (userEmail !== null) {
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel !== null) {
+      let userEmail = userModel.userEmail;
+
       await axios.get(environment.domain + '/users')
         .then(res => {
           let data = res;
@@ -34,12 +36,8 @@ export class AuthServiceService {
   }
 
   logout() {
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userFirstName");
-    localStorage.removeItem("userLastName");
+    localStorage.removeItem("userModel");
     localStorage.removeItem("ShoppingCart");
-    localStorage.removeItem("userAvatar");
-    localStorage.removeItem("userStatus");
   }
 
   deleteUser(id) {

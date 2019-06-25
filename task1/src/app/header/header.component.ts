@@ -8,6 +8,7 @@ import { CartItem } from '../models/CartItem';
 import { CartUpdateService } from '../services/cart-update.service';
 import { AdminCheck } from '../services/admin-check.service';
 import { filter } from 'rxjs/operators';
+import { Extensions } from '../services/extensions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +36,8 @@ export class HeaderComponent implements OnInit {
     private userInfo: UserInfoService,
     private cartUpdate: CartUpdateService,
     private headerService: HeaderService,
-    private authService: AuthServiceService) {
+    private authService: AuthServiceService,
+    private ext:Extensions) {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
       isLoggedIn => {
         this.isLoggedIn = isLoggedIn;
@@ -65,8 +67,10 @@ export class HeaderComponent implements OnInit {
         this.loggedAsAdmin = isAdmin;
       }
     )
+
     if (localStorage.userStatus == 'admin') this.isAdmin = true;
     this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)
+
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
       for (let i = 0; i < this.cartItem.length; i++) {
@@ -89,24 +93,23 @@ export class HeaderComponent implements OnInit {
   }
 
   goToItemDetails(id) {
-    this.router.navigate([`game-details/${id}`]);
+    return this.router.navigate([`game-details/${id}`]);
   }
 
   deleteItem(item) {
     event.stopPropagation();
     if (item.quantity > 1) {
-      this.cartItem[this.filterId(item, this.cartItem)].quantity -= 1;
+      this.cartItem[this.ext.filterId(item, this.cartItem)].quantity -= 1;
       localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
       this.cartUpdate.announcedCartUpdate(this.cartItem);
       return;
     }
-    this.cartItem.splice(this.filterId(item, this.cartItem), 1);
+    this.cartItem.splice(this.ext.filterId(item, this.cartItem), 1);
     localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));
     this.cartUpdate.announcedCartUpdate(this.cartItem);
   }
 
   clearAllCartItems() {
-    event.stopPropagation();
     localStorage.removeItem('ShoppingCart');
     this.cartItem = [];
     this.cartUpdate.announcedCartUpdate(this.cartItem);
@@ -114,16 +117,6 @@ export class HeaderComponent implements OnInit {
 
   goToOrder() {
     this.router.navigate(['order-page']);
-  }
-
-  filterId(item, data) {
-    let result: number;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].id === item.id) {
-        result = i
-      };
-    }
-    return result;
   }
 
 }

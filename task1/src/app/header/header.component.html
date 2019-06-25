@@ -24,7 +24,7 @@
               <li class="listElement" *ngFor="let cartItem of cartItem">
                 <div class="listEl" (click)="goToItemDetails(cartItem.id);">{{cartItem.name}} <span
                     class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
-                    {{cartItem.price*cartItem.quantity+' $'}} <button (click)="deleteItem(cartItem);"
+                    {{cartItem.price*cartItem.quantity+' $'}} <button (click)="deleteItem(cartItem); event.stopPropagation();"
                       class="deleteItem"><i class="fas fa-times"></i></button></span> </div>
               </li>
             </ul>

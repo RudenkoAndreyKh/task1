@@ -25,6 +25,7 @@ export class StoreListComponent implements OnInit {
   items: Item[] = [];
   cartItem: CartItem[] = [];
   currItem: Item;
+  isSpinnerRun = true;
 
   isFilteredItemsNull: boolean = false;
   constructor(
@@ -75,6 +76,7 @@ export class StoreListComponent implements OnInit {
         }
         this.items = this.filteredItems;
       });
+      this.isSpinnerRun = false;
   }
 
   addToCart(item: CartItem) {

@@ -49,9 +49,7 @@ export class ItemDetailComponent implements OnInit {
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
     await this.httpReq.getUserById(this.id).then(res => {
       this.item = res.data;
-      setTimeout(() => {
-        this.isSpinnerRun = false;
-      }, 2000);
+      this.isSpinnerRun = false;
     })
   }
 

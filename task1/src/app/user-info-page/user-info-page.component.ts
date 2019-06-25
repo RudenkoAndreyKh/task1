@@ -6,6 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpRequestService } from '../services/http-request.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-user-info-page',
@@ -50,10 +51,12 @@ export class UserInfoPageComponent implements OnInit {
       });
     }
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-    await this.httpReq.getAllUsers()
-      .then(res => {
-        res.data.map(user => {
-          if (user.email == localStorage.getItem('userEmail')) {
+     this.httpReq.getAllUsers()
+      .subscribe((res : User[]) => {
+        res.map((user) => {
+          console.log(user);
+          let userModel = JSON.parse(localStorage.getItem('userModel'));
+          if (user.email === userModel.userEmail) {
             this.data = user;
             return;
           };
@@ -72,9 +75,11 @@ export class UserInfoPageComponent implements OnInit {
       else this.data.image = this.imgResultAfterCompress;
       await this.httpReq.changeUserInfo(this.data)
         .then(res => {
-          localStorage.setItem('userFirstName', res.data.firstName);
-          localStorage.setItem('userLastName', res.data.lastName);
-          localStorage.setItem('userAvatar', this.imgResultAfterCompress);
+          let userModel = JSON.parse(localStorage.getItem('userModel'));
+          userModel.userFirstName = res.data.firstName;
+          userModel.userLastName = res.data.lastName;
+          userModel.userAvatar = this.imgResultAfterCompress;
+          localStorage.setItem('userModel', JSON.stringify(userModel));
           this._snackBar.open('Your info updated', '', { duration: 2000 });
         })
     }

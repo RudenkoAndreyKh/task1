@@ -1,17 +1,24 @@
 <div class="container list">
     <form>
-        <input class="form-control mr-sm-2 searchInput" placeholder="Search" aria-label="State" [formControl]="searchItems">
+        <input class="form-control mr-sm-2 searchInput" placeholder="Search" aria-label="State"
+            [formControl]="searchItems">
     </form>
-    <h3 *ngIf="isFilteredItemsNull">The search returned no results</h3>
-    <div class="content">
-        <div *ngFor="let item of items" (click)="goToGameDetails(item);" class="itemCard">
-            <div class="imgLayout">
-                <img src="{{item.image}}" alt="{{item.name}}">
+    <div *ngIf="isSpinnerRun" class="container">
+        <app-spinner></app-spinner>
+    </div>
+    <div>
+        <h3 *ngIf="isFilteredItemsNull">The search returned no results</h3>
+        <div class="content">
+            <div *ngFor="let item of items" (click)="goToGameDetails(item);" class="itemCard">
+                <div class="imgLayout">
+                    <img src="{{item.image}}" alt="{{item.name}}">
+                </div>
+                <p class="name">{{item.name}}</p>
+                <p>{{item.description | descriptionsize}}</p>
+                <span class="price">Price: {{item.price+' $'}}</span>
+                <button (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to
+                    cart</button>
             </div>
-            <p class="name">{{item.name}}</p>
-            <p>{{item.description | descriptionsize}}</p>
-            <span class="price">Price: {{item.price+' $'}}</span>
-            <button (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to cart</button>
         </div>
     </div>
 </div>

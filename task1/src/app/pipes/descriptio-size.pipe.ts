@@ -7,7 +7,6 @@ export interface PipeTransform {
 @Pipe({ name: 'descriptionsize' })
 export class DescriptionSizePipe implements PipeTransform {
     transform(description: string) {
-        console.log(description);
         let result = description.slice(0, 100) + "...";
         return result;
     }

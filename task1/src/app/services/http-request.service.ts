@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { FormGroup } from '@angular/forms';
 import { environment } from '../../environments/environment';
-import { Extensions } from './extensions.service';
-import { TableUpdateService } from './update-table.service';
-import { User } from '../models/User';
 import { Item } from '../models/Item';
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpRequestService {
 
-  constructor(private ext: Extensions, private updateTable: TableUpdateService) { }
+  constructor(private http: HttpClient) { }
 
-  async getAllUsers() {
-    return await axios.get(environment.domain + '/users');
+  test() {
+    return this.http.get(environment.domain + '/games');
+  }
+
+  getAllUsers() {
+    return this.http.get<User[]>(environment.domain + '/users');
+    //return await axios.get(environment.domain + '/users');
   }
 
   async getAllGames() {

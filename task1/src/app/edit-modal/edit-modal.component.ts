@@ -38,7 +38,7 @@ export class EditModalComponent implements OnInit {
 
   public async editItem(item, id) {
     this.editItemForm.value.image = this.imgResultAfterCompress;
-    let itemModel: Item = <Item>{name: item.value.name, description: item.value.description, price: item.value.price, image: item.value.image};
+    let itemModel: Item = <Item>{ name: item.value.name, description: item.value.description, price: item.value.price, image: item.value.image };
     var result = await this.httpReq.editItem(itemModel, id);
     if (result.status === 200) {
       let dataSource: any = await <any>this.httpReq.getAllGames();

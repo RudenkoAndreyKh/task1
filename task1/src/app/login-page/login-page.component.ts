@@ -50,12 +50,9 @@ export class LoginPageComponent implements OnInit {
             if (user.status != undefined) this.headerService.announcedisNotLoggedInUser(true);
             this.headerService.announcedisNotLoggedInUser(!this.isNotLoggedInUser);
             this.isLoggedIn = true;
-            localStorage.setItem("userEmail", user.email);
-            localStorage.setItem("userFirstName", user.firstName);
-            localStorage.setItem("userLastName", user.lastName);
-            localStorage.setItem("userAvatar", user.image);
-            localStorage.setItem("userStatus", user.status);
-            if(localStorage.userStatus == 'admin')this.adminCheck.announcedisUserLoggedInAsAdmin(true);
+            let userModel = {userEmail: user.email, userFirstName: user.firstName, userLastName: user.lastName, userAvatar: user.image, userStatus: user.status};
+            localStorage.setItem('userModel', JSON.stringify(userModel));
+            if(localStorage.userModel.userStatus === 'admin')this.adminCheck.announcedisUserLoggedInAsAdmin(true);
             this.router.navigate(['']);
             return;
           };

@@ -21,7 +21,7 @@ export class ItemsDataTableComponent implements OnInit {
   displayedColumns = ['id', 'name', 'price', 'actions'];
 
   constructor(public dialog: MatDialog, private httpReq: HttpRequestService, private updateTable: TableUpdateService) {
-    axios.get(environment.domain + '/games')
+    this.httpReq.getAllGames()
       .then(res => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -29,8 +29,6 @@ export class ItemsDataTableComponent implements OnInit {
         this.table.dataSource = this.dataSource;
       })
   }
-
-
 
   ngOnInit() {
     this.dataSource = new ItemsDataTableDataSource();

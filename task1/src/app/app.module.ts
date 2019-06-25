@@ -38,30 +38,31 @@ import { AdminGuard } from './guards/admin-guard.service';
 
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
-import { LazyLoadModule } from './lazy-load.module';
 import { NotAuthGuard } from './guards/not-auth-guard.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
+    AppComponent,
     AuthPageComponent,
     MainPageComponent,
-    AdminPageComponent,
+    //AdminPageComponent,
     LoginPageComponent,
     StoreListComponent,
-    DataTableComponent,
-    ItemsDataTableComponent,
+    //DataTableComponent,
+    //ItemsDataTableComponent,
     EditModalComponent,
     CreateNewItemModalComponent,
     DescriptionSizePipe,
     PageNotFoundComponent,
     ItemDetailComponent,
-    UserInfoPageComponent,
+    //UserInfoPageComponent,
     FilterPipe,
     TestComponentComponent,
     ShoppingCartComponent,
     EditUserModalComponent,
-    SpinnerComponent,
+    HeaderComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +84,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatSnackBarModule,
     MatAutocompleteModule,
     HttpClientModule,
-    LazyLoadModule
   ],
   providers: [
     UserInfoService, 

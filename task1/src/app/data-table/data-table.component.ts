@@ -6,6 +6,7 @@ import axios from 'axios';
 import { environment } from '../../environments/environment';
 import { TableUpdateService } from '../services/update-table.service';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
+import { HttpRequestService } from '../services/http-request.service';
 
 @Component({
   selector: 'app-data-table',
@@ -20,12 +21,16 @@ export class DataTableComponent implements OnInit {
   dataSource: DataTableDataSource;
   displayedColumns = ['id', 'firstName', 'lastName', 'email', 'actions'];
 
-  constructor(private authService: AuthServiceService, private updateTable: TableUpdateService, public dialog: MatDialog, ) {
+  constructor(
+    private authService: AuthServiceService,
+    private updateTable: TableUpdateService,
+    public dialog: MatDialog,
+    private httpReq: HttpRequestService) {
     this.dataSource = new DataTableDataSource();
   }
 
   ngOnInit() {
-    axios.get(environment.domain + '/users')
+    this.httpReq.getAllUsers()
       .then(res => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

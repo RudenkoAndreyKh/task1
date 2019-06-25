@@ -37,7 +37,7 @@ export class CreateNewItemModalComponent implements OnInit {
     this.matDialogRef.close();
   }
 
-  public async add(newItem) {
+  public async addItem(newItem) {
     this.addItemForm.value.image = this.imgResultAfterCompress;
     let item: Item = <Item>{name: newItem.value.name, description: newItem.value.description, price: newItem.value.price, image: newItem.value.image};
     var result = await this.httpReq.addItem(item);

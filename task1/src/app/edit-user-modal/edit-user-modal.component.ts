@@ -5,6 +5,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
 import { CreateNewItemModalComponent } from '../create-new-item-modal/create-new-item-modal.component';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TableUpdateService } from '../services/update-table.service';
+import { ArrayType } from '@angular/compiler';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -41,8 +42,11 @@ export class EditUserModalComponent implements OnInit {
   async editUser(user) {
     var result = await this.httpReq.changeUserInfo(user.value);
     if (result.status === 200) {
-      let dataSource = await this.httpReq.getAllUsers();
-      debugger;
+      let dataSource;
+      await this.httpReq.getAllUsers()
+        .subscribe(res => {
+          dataSource = res;
+        })
       this.updateTable.announcedUsersTableUpdate(dataSource.data);
       this.matDialogRef.close();
     }

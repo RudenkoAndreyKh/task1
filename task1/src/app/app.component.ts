@@ -5,6 +5,7 @@ import { HeaderService } from './services/header-service';
 import { AdminCheck } from './services/admin-check.service';
 import { HttpRequestService } from './services/http-request.service';
 import { AuthServiceService } from './services/auth-service.service';
+import { map } from 'rxjs/internal/operators/map';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,6 @@ import { AuthServiceService } from './services/auth-service.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterContentChecked {
-  title = 'Main Page';
   isLoggedIn = false;
   isNotLoggedInUser = true;
   isAdmin = false;
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
     private httpReq: HttpRequestService,
     private adminCheck: AdminCheck,
     private headerService: HeaderService,
-    private authService: AuthServiceService ) { }
+    private authService: AuthServiceService) { }
 
   async ngOnInit() {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
@@ -33,16 +33,24 @@ export class AppComponent implements OnInit, AfterContentChecked {
       (isNotLoggedInUser) => {
         this.isNotLoggedInUser = isNotLoggedInUser;
       });
-      await this.authService.isLoggedIn().then(res => {
-        this.isLoggedIn = res;
-      })
-      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+    await this.authService.isLoggedIn().then(res => {
+      this.isLoggedIn = res;
+    })
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+    await  this.httpReq.test().subscribe((res)=>{
+      console.log(res);
+  });
   }
 
   ngAfterContentChecked() {
-    let user = <User>{ firstName: localStorage.getItem("userFirstName"), image: localStorage.getItem("userAvatar") };
-    this.userInfoService.announcedUserInfo(user);
-    if (localStorage.userStatus == 'admin') this.isAdmin = true;
-    this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel !== null) {
+      if (userModel.userStatus == 'admin') this.isAdmin = true;
+      let user = <User>{ firstName: userModel.userFirstName, image: userModel.userAvatar };
+      this.userInfoService.announcedUserInfo(user);
+      
+      this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)
+    }
+
   }
 }

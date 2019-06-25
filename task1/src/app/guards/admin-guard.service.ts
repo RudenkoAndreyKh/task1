@@ -10,8 +10,10 @@ export class AdminGuard implements CanActivate {
     constructor(private _authService: AuthServiceService, private _router: Router) { }
 
     canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-        this.isAdmin = localStorage.userStatus;
+        let userModel = JSON.parse(localStorage.getItem("userModel"));
+        this.isAdmin = userModel.userStatus;
         if (this.isAdmin != 'admin') {
+            console.log("admin");
             this._router.navigate(['/']);
             return this.isAdmin == 'admin';
         }
