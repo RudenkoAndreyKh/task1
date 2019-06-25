@@ -22,20 +22,20 @@ export class HttpRequestService {
     //return await axios.get(environment.domain + '/users');
   }
 
-  async getAllGames() {
-    return await axios.get(environment.domain + '/games');
+  getAllGames() {
+    return this.http.get(environment.domain + '/games');
   }
 
-  async getUserById(id) {
-    return await axios.get(environment.domain + `/games/${id}/`)
+  getUserById(id) {
+    return this.http.get(environment.domain + `/games/${id}/`);
   }
 
   deleteItem(id, data) {
-    return axios.delete(environment.domain + `/games/${id}/`);
+    return this.http.delete(environment.domain + `/games/${id}/`);
   }
 
-  async editItem(item: Item, id) {
-    return await axios.put(environment.domain + `/games/${id}/`, {
+  editItem(item: Item, id) {
+    return this.http.put(environment.domain + `/games/${id}/`, {
       name: item.name,
       price: item.price,
       image: item.image,
@@ -44,7 +44,7 @@ export class HttpRequestService {
   }
 
   addItem(item: Item) {
-    return axios.post(environment.domain + `/games`, {
+    return this.http.post(environment.domain + `/games`, {
       name: item.name,
       price: item.price,
       image: item.image,
@@ -53,8 +53,8 @@ export class HttpRequestService {
 
   }
 
-  async changeUserInfo(data) {
-    return await axios.put(environment.domain + `/users/${data.id}`, data)
+  changeUserInfo(data) {
+    return this.http.put(environment.domain + `/users/${data.id}`, data)
   }
 
 }

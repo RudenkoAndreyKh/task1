@@ -33,13 +33,20 @@ export class AppComponent implements OnInit, AfterContentChecked {
       (isNotLoggedInUser) => {
         this.isNotLoggedInUser = isNotLoggedInUser;
       });
-    await this.authService.isLoggedIn().then(res => {
-      this.isLoggedIn = res;
+    await this.authService.isLoggedIn().subscribe((res: User[]) => {
+      let isLoggedIn: boolean = false;
+      let userModel = JSON.parse(localStorage.getItem("userModel"));
+      let data = res;
+      if (userModel !== null) {
+        let userEmail = userModel.userEmail;
+        data.filter(user => {
+          if (user.email === userEmail) {
+            isLoggedIn = true;
+            this.headerService.announcedisUserLoggedIn(isLoggedIn);
+          }
+        })
+      }
     })
-    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-    await  this.httpReq.test().subscribe((res)=>{
-      console.log(res);
-  });
   }
 
   ngAfterContentChecked() {
@@ -48,7 +55,7 @@ export class AppComponent implements OnInit, AfterContentChecked {
       if (userModel.userStatus == 'admin') this.isAdmin = true;
       let user = <User>{ firstName: userModel.userFirstName, image: userModel.userAvatar };
       this.userInfoService.announcedUserInfo(user);
-      
+
       this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)
     }
 

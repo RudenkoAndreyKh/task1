@@ -13,7 +13,6 @@ export class AdminGuard implements CanActivate {
         let userModel = JSON.parse(localStorage.getItem("userModel"));
         this.isAdmin = userModel.userStatus;
         if (this.isAdmin != 'admin') {
-            console.log("admin");
             this._router.navigate(['/']);
             return this.isAdmin == 'admin';
         }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
 import { HeaderService } from '../services/header-service';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-main-page',
@@ -8,9 +9,9 @@ import { HeaderService } from '../services/header-service';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-  isLoggedIn = true;
+  isLoggedIn = false;
   isNotLoggedInUser = true;
-  
+
   constructor(
     private headerService: HeaderService,
     private authService: AuthServiceService) {
@@ -18,10 +19,22 @@ export class MainPageComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.authService.isLoggedIn().then(res => {
-      this.isLoggedIn = res;
+    await this.authService.isLoggedIn().subscribe((res: User[]) => {
+      let isLoggedIn: boolean = false;
+      let userModel = JSON.parse(localStorage.getItem("userModel"));
+      let data = res;
+      if (userModel !== null) {
+        let userEmail = userModel.userEmail;
+        data.filter(user => {
+          if (user.email == userEmail) {
+            isLoggedIn = true;
+          }
+        })
+      }
+      this.isLoggedIn = isLoggedIn;
+      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
     })
-    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+
   }
 
 }

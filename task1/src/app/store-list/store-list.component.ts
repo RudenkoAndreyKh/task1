@@ -39,9 +39,9 @@ export class StoreListComponent implements OnInit {
 
   async ngOnInit() {
     await this.httpReq.getAllGames()
-      .then(res => {
-        this.items = res.data;
-        this.data = res.data;
+      .subscribe((res: Item[]) => {
+        this.items = res;
+        this.data = res;
       })
     this.searchItems.valueChanges
       .pipe(

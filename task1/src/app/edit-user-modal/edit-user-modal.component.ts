@@ -6,6 +6,7 @@ import { CreateNewItemModalComponent } from '../create-new-item-modal/create-new
 import { FormGroup, FormControl } from '@angular/forms';
 import { TableUpdateService } from '../services/update-table.service';
 import { ArrayType } from '@angular/compiler';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -40,16 +41,13 @@ export class EditUserModalComponent implements OnInit {
   }
 
   async editUser(user) {
-    var result = await this.httpReq.changeUserInfo(user.value);
-    if (result.status === 200) {
-      let dataSource;
-      await this.httpReq.getAllUsers()
-        .subscribe(res => {
-          dataSource = res;
-        })
-      this.updateTable.announcedUsersTableUpdate(dataSource.data);
+    this.httpReq.changeUserInfo(user.value).subscribe(res => {
+      this.httpReq.getAllUsers().subscribe((res:User[]) =>{
+        let dataSource = <any>res;
+        this.updateTable.announcedUsersTableUpdate(dataSource);
+      })      
       this.matDialogRef.close();
-    }
+    })
   }
 
   compressFile() {

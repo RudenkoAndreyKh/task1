@@ -2,8 +2,6 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTable, MatTableDataSource, MatDialog } from '@angular/material';
 import { DataTableDataSource, DataTableItem } from './data-table-datasource';
 import { AuthServiceService } from '../services/auth-service.service';
-import axios from 'axios';
-import { environment } from '../../environments/environment';
 import { TableUpdateService } from '../services/update-table.service';
 import { EditUserModalComponent } from '../edit-user-modal/edit-user-modal.component';
 import { HttpRequestService } from '../services/http-request.service';
@@ -31,10 +29,10 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.httpReq.getAllUsers()
-      .then(res => {
+      .subscribe((res:any[]) => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.dataSource.data = res.data;
+        this.dataSource.data = res;
         this.table.dataSource = this.dataSource;
       })
     this.dataSource = new DataTableDataSource();
@@ -46,7 +44,7 @@ export class DataTableComponent implements OnInit {
 
   deleteUser(userId) {
     this.authService.deleteUser(userId)
-      .then(res => {
+      .subscribe(() => {
         let dataSource = this.dataSource.data;
         for (let i = 0; i < dataSource.length; i++) {
           if (dataSource[i].id == userId) {

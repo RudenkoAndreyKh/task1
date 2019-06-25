@@ -42,21 +42,35 @@ export class UserInfoPageComponent implements OnInit {
       image: new FormControl(localStorage.userAvatar)
     })
 
-    await this.authService.isLoggedIn().then(res => {
-      this.isLoggedIn = res;
+    await this.authService.isLoggedIn().subscribe((res: User[]) => {
+      let isLoggedIn: boolean = false;
+      let userModel = JSON.parse(localStorage.getItem("userModel"));
+      let data = res;
+      if (userModel !== null) {
+        let userEmail = userModel.userEmail;
+        data.filter(user => {
+          if (user.email == userEmail) {
+            isLoggedIn = true;
+          }
+        })
+
+      }
+      this.isLoggedIn = isLoggedIn;
+
+      if (!this.isLoggedIn) {
+        this.router.navigate(['login']).then(() => {
+          this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+        });
+      }
+      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
     })
-    if (!this.isLoggedIn) {
-      this.router.navigate(['login']).then(() => {
-        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-      });
-    }
+
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-     this.httpReq.getAllUsers()
-      .subscribe((res : User[]) => {
+    this.httpReq.getAllUsers()
+      .subscribe((res: User[]) => {
         res.map((user) => {
-          console.log(user);
           let userModel = JSON.parse(localStorage.getItem('userModel'));
-          if (user.email === userModel.userEmail) {
+          if (user.email == userModel.userEmail) {
             this.data = user;
             return;
           };
@@ -64,7 +78,7 @@ export class UserInfoPageComponent implements OnInit {
       })
   }
 
-  get f() { return this.userChangeForm.controls; }
+  get checkInputs() { return this.userChangeForm.controls; }
 
   async changeUser() {
     this.submitted = true;
@@ -74,10 +88,10 @@ export class UserInfoPageComponent implements OnInit {
       if (this.imgResultAfterCompress == undefined) this.data.image = this.data.image;
       else this.data.image = this.imgResultAfterCompress;
       await this.httpReq.changeUserInfo(this.data)
-        .then(res => {
+        .subscribe((res: User) => {
           let userModel = JSON.parse(localStorage.getItem('userModel'));
-          userModel.userFirstName = res.data.firstName;
-          userModel.userLastName = res.data.lastName;
+          userModel.userFirstName = res.firstName;
+          userModel.userLastName = res.lastName;
           userModel.userAvatar = this.imgResultAfterCompress;
           localStorage.setItem('userModel', JSON.stringify(userModel));
           this._snackBar.open('Your info updated', '', { duration: 2000 });

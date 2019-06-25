@@ -7,6 +7,7 @@ import { CreateNewItemModalComponent } from '../create-new-item-modal/create-new
 import { environment } from '../../environments/environment';
 import { TableUpdateService } from '../services/update-table.service';
 import { HttpRequestService } from '../services/http-request.service';
+import { Item } from '../models/Item';
 
 @Component({
   selector: 'app-items-data-table',
@@ -22,10 +23,10 @@ export class ItemsDataTableComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private httpReq: HttpRequestService, private updateTable: TableUpdateService) {
     this.httpReq.getAllGames()
-      .then(res => {
+      .subscribe((res:Item[]) => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.dataSource.data = res.data;
+        this.dataSource.data = res;
         this.table.dataSource = this.dataSource;
       })
   }
@@ -34,12 +35,13 @@ export class ItemsDataTableComponent implements OnInit {
     this.dataSource = new ItemsDataTableDataSource();
     this.updateTable.tableUpdateAnnounced$.subscribe(
       (data: ItemsDataTableItem[]) => {
+        console.log(data);
         this.table.dataSource = new MatTableDataSource<ItemsDataTableItem>(data);
       });
   }
 
   deleteItem(itemId) {
-    this.httpReq.deleteItem(itemId, this.dataSource.data).then(res => {
+    this.httpReq.deleteItem(itemId, this.dataSource.data).subscribe(res => {
       let dataSource = this.dataSource.data;
       for (let i = 0; i < dataSource.length; i++) {
         if (dataSource[i].id == itemId) {

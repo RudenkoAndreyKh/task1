@@ -33,8 +33,19 @@ export class LoginPageComponent implements OnInit {
       password: new FormControl('', Validators.required)
     })
 
-    await this.authService.isLoggedIn().then(res => {
-      this.isLoggedIn = res;
+    await this.authService.isLoggedIn().subscribe((res: User[]) => {
+      let isLoggedIn: boolean = false;
+      let userModel = JSON.parse(localStorage.getItem("userModel"));
+      let data = res;
+      if (userModel !== null) {
+        let userEmail = userModel.userEmail;
+        data.filter(user => {
+          if (user.email == userEmail) {
+            isLoggedIn = true;
+          }
+        })
+      }
+      this.isLoggedIn = isLoggedIn;
     })
     if (this.isLoggedIn) {
       this.router.navigate(['']);
@@ -43,16 +54,17 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     this.authService.login()
-      .then(res => {
+      .subscribe((res: User[]) => {
         let data = res;
-        data.data.map(user => {
+        data.map((user:any) => {
           if (user.email == this.loginForm.controls.email.value && user.password == this.loginForm.controls.password.value) {
             if (user.status != undefined) this.headerService.announcedisNotLoggedInUser(true);
             this.headerService.announcedisNotLoggedInUser(!this.isNotLoggedInUser);
             this.isLoggedIn = true;
-            let userModel = {userEmail: user.email, userFirstName: user.firstName, userLastName: user.lastName, userAvatar: user.image, userStatus: user.status};
+            let userModel = { userEmail: user.email, userFirstName: user.firstName, userLastName: user.lastName, userAvatar: user.image, userStatus: user.status };
             localStorage.setItem('userModel', JSON.stringify(userModel));
-            if(localStorage.userModel.userStatus === 'admin')this.adminCheck.announcedisUserLoggedInAsAdmin(true);
+            if (localStorage.userModel.userStatus === 'admin') this.adminCheck.announcedisUserLoggedInAsAdmin(true);
+            this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
             this.router.navigate(['']);
             return;
           };

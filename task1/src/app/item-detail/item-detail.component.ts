@@ -9,6 +9,7 @@ import { HeaderService } from '../services/header-service';
 import { CartItem } from '../models/CartItem';
 import { Extensions } from '../services/extensions.service';
 import { CartUpdateService } from '../services/cart-update.service';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-item-detail',
@@ -38,17 +39,24 @@ export class ItemDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.authService.isLoggedIn().then(res => {
-      this.isLoggedIn = res;
+    await this.authService.isLoggedIn().subscribe((res: User[]) => {
+      let isLoggedIn: boolean = false;
+      let userModel = JSON.parse(localStorage.getItem("userModel"));
+      let data = res;
+      if (userModel !== null) {
+        let userEmail = userModel.userEmail;
+        data.filter(user => {
+          if (user.email == userEmail) {
+            isLoggedIn = true;
+          }
+        })
+      }
+      this.isLoggedIn = isLoggedIn;
+      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
     })
-    if (!this.isLoggedIn) {
-      this.router.navigate(['login']).then(() => {
-        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-      });
-    }
     this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-    await this.httpReq.getUserById(this.id).then(res => {
-      this.item = res.data;
+    await this.httpReq.getUserById(this.id).subscribe((res:Item) => {
+      this.item = res;
       this.isSpinnerRun = false;
     })
   }
