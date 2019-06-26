@@ -17,7 +17,7 @@ import { NotAuthGuard } from './guards/not-auth-guard.service';
 const routes: Routes = [
   { path: 'registration', component: AuthPageComponent, canActivate: [AuthGuard] },
   { path: 'admin', canActivate: [AdminGuard], loadChildren: './admin-page/admin-page.module#AdminPageModule' },
-  { path: 'login', component: LoginPageComponent },
+  { path: 'login', component: LoginPageComponent, canActivate: [AuthGuard] },
   { path: 'game-details/:id', component: ItemDetailComponent },
   { path: 'user-page', canActivate: [NotAuthGuard], loadChildren: './user-info-page/user-info-page.module#UserInfoPageModule' },
   { path: 'test-page', component: TestComponentComponent, canActivate: [AdminGuard] },

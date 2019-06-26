@@ -35,27 +35,18 @@ export class ItemDetailComponent implements OnInit {
     this.routeSubscription = route.params.subscribe((params: Item) => {
       this.id = params['id'];
     });
+    this.headerService.isUserLoggedInAnnounced$.subscribe(
+      isLoggedIn => {
+        console.log("sub");
+        this.isLoggedIn = isLoggedIn;
+      }
+    )
 
   }
 
   async ngOnInit() {
-    await this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let isLoggedIn: boolean = false;
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      let data = res;
-      if (userModel !== null) {
-        let userEmail = userModel.userEmail;
-        data.filter(user => {
-          if (user.email == userEmail) {
-            isLoggedIn = true;
-          }
-        })
-      }
-      this.isLoggedIn = isLoggedIn;
-      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-    })
-    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-    await this.httpReq.getUserById(this.id).subscribe((res:Item) => {
+
+    await this.httpReq.getUserById(this.id).subscribe((res: Item) => {
       this.item = res;
       this.isSpinnerRun = false;
     })

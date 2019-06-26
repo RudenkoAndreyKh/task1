@@ -1,14 +1,19 @@
-
-<div  *ngIf="isSpinnerRun" class="itemDetail"><app-spinner></app-spinner></div>
-<div  *ngIf="!isSpinnerRun" class="itemDetail">
+<div class="itemDetail">
+  <div *ngIf="isSpinnerRun" class="itemDetail">
+    <app-spinner></app-spinner>
+  </div>
   <div class="container" *ngIf="item != null">
-    <div class="infoCard">
-      <img src="{{item.image}}" alt="{{item.name}}">
-      <p class="price">Price: {{item.price}}</p>
-      <button (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to cart</button>
+
+    <div *ngIf="!isSpinnerRun" class="content">
+      <div class="infoCard">
+        <img src="{{item.image}}" alt="{{item.name}}">
+        <p class="price">Price: {{item.price}}</p>
+        <button *ngIf="isLoggedIn" (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to
+          cart</button>
+      </div>
+      <span>
+        <h1>{{item.name}}</h1>{{item.description}}
+      </span>
     </div>
-    <span>
-      <h1>{{item.name}}</h1>{{item.description}}
-    </span>
   </div>
 </div>

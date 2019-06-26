@@ -26,27 +26,6 @@ export class ShoppingCartComponent implements OnInit {
     private ext: Extensions) { }
 
   async ngOnInit() {
-    await this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let isLoggedIn: boolean = false;
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      let data = res;
-      if (userModel !== null) {
-        let userEmail = userModel.userEmail;
-        data.filter(user => {
-          if (user.email == userEmail) {
-            isLoggedIn = true;
-          }
-        })
-      }
-      this.isLoggedIn = isLoggedIn;
-    })
-    if (!this.isLoggedIn) {
-      this.router.navigate(['login']).then(() => {
-        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-      });
-    }
-    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-
 
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));

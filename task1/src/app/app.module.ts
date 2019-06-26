@@ -41,6 +41,8 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
 import { NotAuthGuard } from './guards/not-auth-guard.service';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { ParamInterceptor } from './interceptors/test.interceptor';
+import { ErrorDialogService } from './services/error-dialog.service';
+import { ErrorDialogComponent } from './interceptors/error-dialog.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { ParamInterceptor } from './interceptors/test.interceptor';
     ShoppingCartComponent,
     EditUserModalComponent,
     HeaderComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -97,6 +100,7 @@ import { ParamInterceptor } from './interceptors/test.interceptor';
     HttpClient, 
     NgxImageCompressService,
     NotAuthGuard,
+    ErrorDialogService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ParamInterceptor,

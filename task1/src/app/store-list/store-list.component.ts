@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { HttpRequestService } from '../services/http-request.service';
+import { HeaderService } from '../services/header-service';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class StoreListComponent implements OnInit {
   cartItem: CartItem[] = [];
   currItem: Item;
   isSpinnerRun = true;
+  isLoggedIn = false;
 
   isFilteredItemsNull: boolean = false;
   constructor(
@@ -33,11 +35,17 @@ export class StoreListComponent implements OnInit {
     private httpReq: HttpRequestService,
     private cartUpdate: CartUpdateService,
     private ext: Extensions,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private headerService:HeaderService) {
 
   }
 
   async ngOnInit() {
+    this.headerService.isUserLoggedInAnnounced$.subscribe(
+      isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
+      }
+    )
     await this.httpReq.getAllGames()
       .subscribe((res: Item[]) => {
         this.items = res;
@@ -102,7 +110,11 @@ export class StoreListComponent implements OnInit {
   }
 
   goToGameDetails(item) {
-    this.router.navigate([`/game-details/${item.id}`]);
+    this.router.navigate([`/game-details/${item.id}`])
+    .then(() =>{
+      console.log("next");
+      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+    });
   }
 
 }

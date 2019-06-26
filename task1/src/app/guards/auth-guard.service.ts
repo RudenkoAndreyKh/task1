@@ -8,11 +8,23 @@ import { User } from '../models/User';
 export class AuthGuard implements CanActivate {
 
 
-  constructor(private _authService: AuthServiceService, private _router: Router) {
+  constructor(private authService: AuthServiceService, private _router: Router) {
   }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+    let result = true;
+    this.authService.isLoggedIn().subscribe((res: User[]) => {
+      let userModel = JSON.parse(localStorage.getItem("userModel"));
+      if(userModel){
+        res.map(user =>{
+          if(user.email === userModel.userEmail){
+            result = false;
+            this._router.navigate(['']);
+          }
+        })
+      }
+    })
+    return result;
   }
 
 }

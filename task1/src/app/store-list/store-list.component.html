@@ -16,7 +16,7 @@
                 <p class="name">{{item.name}}</p>
                 <p>{{item.description | descriptionsize}}</p>
                 <span class="price">Price: {{item.price+' $'}}</span>
-                <button (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to
+                <button *ngIf="isLoggedIn" (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to
                     cart</button>
             </div>
         </div>

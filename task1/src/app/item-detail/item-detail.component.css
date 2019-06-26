@@ -9,6 +9,11 @@
     background-color: #f1f1f185;
     height: calc(100vh - 3.5em);
     display: flex;
+    align-items: center;
+}
+
+.content{
+    display: flex;
 }
 
 .infoCard img{
