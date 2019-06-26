@@ -88,7 +88,6 @@ export class StoreListComponent implements OnInit {
   }
 
   addToCart(item: CartItem) {
-    event.stopPropagation()
     if (localStorage.getItem('ShoppingCart') == null) {
       this.cartItem = [];
     }

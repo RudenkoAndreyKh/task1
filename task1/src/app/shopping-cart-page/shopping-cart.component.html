@@ -7,7 +7,7 @@
                             alt="{{cartItem.name}}">{{cartItem.name}} <span
                             class="badge badge-secondary">{{cartItem.quantity}}</span> <span
                             class="priceAndDelete">Price:
-                            {{cartItem.price}} <button (click)="deleteItem(cartItem);" class="deleteItem"><i
+                            {{cartItem.price}} <button (click)="deleteItem(cartItem); $event.stopPropagation();" class="deleteItem"><i
                                     class="fas fa-times"></i></button></span> </div>
                 </li>
             </ul>

@@ -50,7 +50,6 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   deleteItem(item) {
-    event.stopPropagation();
     if (item.quantity > 1) {
       this.cartItem[this.ext.filterId(item, this.cartItem)].quantity -= 1;
       localStorage.setItem('ShoppingCart', JSON.stringify(this.cartItem));

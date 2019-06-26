@@ -108,6 +108,6 @@ import { ErrorDialogComponent } from './interceptors/error-dialog.component';
     }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [EditModalComponent, CreateNewItemModalComponent, EditUserModalComponent]
+  entryComponents: [EditModalComponent, CreateNewItemModalComponent, EditUserModalComponent, ErrorDialogComponent]
 })
 export class AppModule { }

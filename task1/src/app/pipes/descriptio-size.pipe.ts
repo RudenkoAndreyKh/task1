@@ -6,8 +6,10 @@ export interface PipeTransform {
 
 @Pipe({ name: 'descriptionsize' })
 export class DescriptionSizePipe implements PipeTransform {
-    transform(description: string) {
-        let result = description.slice(0, 100) + "...";
+    transform(description: string, symbolsQuantity: number) {
+        let result:string;
+        result = description.slice(0, symbolsQuantity) + "...";
+        if(description.length < symbolsQuantity){result = description.slice(0, symbolsQuantity)}
         return result;
     }
 }

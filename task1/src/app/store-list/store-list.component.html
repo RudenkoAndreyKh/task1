@@ -14,9 +14,9 @@
                     <img src="{{item.image}}" alt="{{item.name}}">
                 </div>
                 <p class="name">{{item.name}}</p>
-                <p>{{item.description | descriptionsize}}</p>
+                <p>{{item.description | descriptionsize : 100}}</p>
                 <span class="price">Price: {{item.price+' $'}}</span>
-                <button *ngIf="isLoggedIn" (click)="addToCart(item);" class="addToCart"><i class="fas fa-cart-plus"></i> Add to
+                <button *ngIf="isLoggedIn" (click)="addToCart(item); $event.stopPropagation();" class="addToCart"><i class="fas fa-cart-plus"></i> Add to
                     cart</button>
             </div>
         </div>

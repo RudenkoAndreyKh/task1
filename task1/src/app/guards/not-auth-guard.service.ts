@@ -13,16 +13,13 @@ export class NotAuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     let result = false;
-    this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      if(userModel){
-        res.map(user =>{
-          if(user.email === userModel.userEmail){
-            result = true;
-          }
-        })
-      }
-    })
+
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel) {
+      result = true;
+    }
+
+    console.log(result);
     return result;
   }
 
