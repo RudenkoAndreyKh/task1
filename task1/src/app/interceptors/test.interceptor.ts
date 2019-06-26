@@ -10,17 +10,17 @@ import { ErrorDialogService } from '../services/error-dialog.service';
 export class ParamInterceptor implements HttpInterceptor {
     constructor(private errorDialogService: ErrorDialogService) { }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        catchError((error: HttpErrorResponse) => {
-            let data = {};
-            data = {
-                reason: error && error.error.reason ? error.error.reason : '',
-                status: error.status
-            };
-            this.errorDialogService.openDialog(data);
-            console.log("err", error);
-            return throwError(error);
-        })
+        
         return next.handle(req).pipe(
+            catchError((error: HttpErrorResponse) => {
+                let data = {};
+                data = {
+                    reason: error && error.error.reason ? error.error.reason : 'not found',
+                    status: error.status
+                };
+                this.errorDialogService.openDialog(data);
+                return throwError(error);
+            }),
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     console.log("OK", event);

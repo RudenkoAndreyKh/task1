@@ -22,7 +22,7 @@ export class HttpRequestService {
   }
 
   getAllGames() {
-    return this.http.get(environment.domain + '/games');
+    return this.http.get(environment.domain + '/gamess');
   }
 
   getUserById(id) {
