@@ -48,6 +48,8 @@ export class LoginPageComponent implements OnInit {
     let userModel = <User>({ email: this.loginForm.value.email, password: this.loginForm.value.password })
     this.authService.login(userModel)
       .subscribe((res: any) => {
+        console.log(res);
+        
         if (res.data.user.success === true) this.headerService.announcedisUserLoggedIn(true);
         if (res.data.user.status === 'admin') this.adminCheck.announcedisUserLoggedInAsAdmin(true);
         this.router.navigate([''])

@@ -31,6 +31,8 @@ export class AuthPageComponent implements OnInit {
     let userModel = JSON.parse(localStorage.getItem("userModel"));
     if (userModel) {
       await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+        console.log(res);
+        
         this.isLoggedIn = res.success;
       })
     }

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
 import { User } from '../models/User';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +11,16 @@ export class AuthServiceService {
   constructor(private http: HttpClient) { }
 
   addNewUser(userModel: User) {
-    return this.http.post(environment.domain + `/authentication/signUp`, userModel);
+    return this.http.post(environment.domain + `/auth/create-new-user`, userModel);
     //return this.http.post(environment.domain + '/users', userModel);
   }
 
   login(userModel) {
-    return this.http.post(environment.domain + `/authentication/signIn`, userModel);
+    return this.http.post(environment.domain + `/auth/sign-in`, userModel);
   }
 
   isLoggedIn(userModel) {
-    return this.http.post<any>(environment.domain + `/authentication/isLoggedIn`, userModel);
+    return this.http.post<any>(environment.domain + `/auth/is-logged-in`, userModel);
   }
 
   isTokenExpired(tokenExpiresIn) {

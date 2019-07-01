@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
 import { environment } from '../../environments/environment';
 import { Item } from '../models/Item';
 import { HttpClient } from "@angular/common/http";
-import { map } from "rxjs/operators";
-import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +11,7 @@ export class HttpRequestService {
   constructor(private http: HttpClient) { }
 
   getUser(email) {
-    return this.http.post(environment.domain + `/users/findOne`, { email });
+    return this.http.post(environment.domain + `/users/find-one-by-email`, { email });
   }
 
   getAllUsers() {
@@ -23,7 +20,6 @@ export class HttpRequestService {
 
   getAllGames() {
     return this.http.get(environment.domain + `/games`);
-    // return this.http.get(environment.domain + '/gamess');
   }
 
   getItemById(id) {
@@ -35,7 +31,7 @@ export class HttpRequestService {
   }
 
   editItem(item: Item, id) {
-    return this.http.put(environment.domain + `/games/editGame/${id}`, {
+    return this.http.put(environment.domain + `/games/${id}`, {
       name: item.name,
       price: item.price,
       image: item.image,
@@ -44,7 +40,7 @@ export class HttpRequestService {
   }
 
   addItem(item: Item) {
-    return this.http.post(environment.domain + `/games/add`, {
+    return this.http.post(environment.domain + `/games/add-new-game`, {
       name: item.name,
       price: item.price,
       image: item.image,
@@ -54,7 +50,7 @@ export class HttpRequestService {
   }
 
   changeUserInfo(data) {
-    return this.http.put(environment.domain + `/users/editUser/${data._id}`, data)
+    return this.http.put(environment.domain + `/users/${data._id}`, data)
   }
 
 }
