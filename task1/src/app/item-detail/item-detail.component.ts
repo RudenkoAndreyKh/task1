@@ -37,7 +37,6 @@ export class ItemDetailComponent implements OnInit {
     });
     this.headerService.isUserLoggedInAnnounced$.subscribe(
       isLoggedIn => {
-        console.log("sub");
         this.isLoggedIn = isLoggedIn;
       }
     )
@@ -45,11 +44,19 @@ export class ItemDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-
-    await this.httpReq.getUserById(this.id).subscribe((res: Item) => {
-      this.item = res;
+    await this.httpReq.getItemById(this.id).subscribe((res: any) => {
+      this.item = res.data;
       this.isSpinnerRun = false;
     })
+    let tokenExpiresIn = localStorage.getItem("tokenExpiresIn")
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel) {
+      if (await this.authService.isTokenExpired(tokenExpiresIn)) this.authService.logout();
+      await this.authService.isLoggedIn(userModel).subscribe((res: any) => {
+        this.isLoggedIn = res.success;
+      })
+    }
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
   }
 
   addToCart(item: CartItem) {

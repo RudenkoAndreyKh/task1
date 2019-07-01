@@ -19,14 +19,15 @@ export class ItemsDataTableComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatTable, { static: false }) table: MatTable<ItemsDataTableItem>;
   dataSource: ItemsDataTableDataSource;
-  displayedColumns = ['id', 'name', 'price', 'actions'];
+  displayedColumns = [ 'name', 'price', 'actions'];
 
   constructor(public dialog: MatDialog, private httpReq: HttpRequestService, private updateTable: TableUpdateService) {
     this.httpReq.getAllGames()
-      .subscribe((res:Item[]) => {
+      .subscribe((res:any) => {
+        console.log(res);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.dataSource.data = res;
+        this.dataSource.data = res.data;
         this.table.dataSource = this.dataSource;
       })
   }
@@ -41,10 +42,10 @@ export class ItemsDataTableComponent implements OnInit {
   }
 
   deleteItem(itemId) {
-    this.httpReq.deleteItem(itemId, this.dataSource.data).subscribe(res => {
-      let dataSource = this.dataSource.data;
+    this.httpReq.deleteItem(itemId).subscribe(res => {
+      let dataSource:any = this.dataSource.data;
       for (let i = 0; i < dataSource.length; i++) {
-        if (dataSource[i].id == itemId) {
+        if (dataSource[i]._id == itemId) {
           dataSource.splice(i, 1);
           break;
         }

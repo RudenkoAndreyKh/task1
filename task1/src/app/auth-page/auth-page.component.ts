@@ -28,21 +28,13 @@ export class AuthPageComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     })
-    await this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let isLoggedIn: boolean = false;
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      let data = res;
-      if (userModel !== null) {
-        let userEmail = userModel.userEmail;
-        data.filter(user => {
-          if (user.email == userEmail) {
-            isLoggedIn = true;
-          }
-        })
-      }
-      this.headerService.announcedisNotLoggedInUser(this.isLoggedIn);
-      this.isLoggedIn = isLoggedIn;
-    })
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel) {
+      await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+        this.isLoggedIn = res.success;
+      })
+    }
+    this.headerService.announcedisNotLoggedInUser(this.isLoggedIn);
   }
 
   get chekInputs() { return this.registerForm.controls; }
@@ -54,17 +46,16 @@ export class AuthPageComponent implements OnInit {
       return;
     }
     this.authService.addNewUser(<User>{
-      email: this.registerForm.value.email,
       firstName: this.registerForm.value.firstName,
       lastName: this.registerForm.value.lastName,
+      email: this.registerForm.value.email,
       password: this.registerForm.value.password,
       image: environment.defaultImage
     })
       .subscribe(res => {
-        if (res) {
-          this.router.navigate(['login']);
-          return;
-        }
+        console.log(res);
+        this.router.navigate(['login']);
+        return;
       })
   }
 

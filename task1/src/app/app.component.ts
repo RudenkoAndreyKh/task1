@@ -6,6 +6,7 @@ import { AdminCheck } from './services/admin-check.service';
 import { HttpRequestService } from './services/http-request.service';
 import { AuthServiceService } from './services/auth-service.service';
 import { map } from 'rxjs/internal/operators/map';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit, AfterContentChecked {
     private httpReq: HttpRequestService,
     private adminCheck: AdminCheck,
     private headerService: HeaderService,
-    private authService: AuthServiceService) { }
+    private authService: AuthServiceService,
+    private router: Router) { }
 
   async ngOnInit() {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
@@ -33,27 +35,26 @@ export class AppComponent implements OnInit, AfterContentChecked {
       (isNotLoggedInUser) => {
         this.isNotLoggedInUser = isNotLoggedInUser;
       });
-    await this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let isLoggedIn: boolean = false;
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      let data = res;
-      if (userModel !== null) {
-        let userEmail = userModel.userEmail;
-        data.filter(user => {
-          if (user.email === userEmail) {
-            isLoggedIn = true;
-            this.headerService.announcedisUserLoggedIn(isLoggedIn);
-          }
-        })
-      }
-    })
+    let tokenExpiresIn = localStorage.getItem("tokenExpiresIn")
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel) {
+      await this.authService.isLoggedIn(userModel).subscribe((res: any) => {
+        this.isLoggedIn = res.success;
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+      })
+      if (await this.authService.isTokenExpired(tokenExpiresIn)) {
+        this.authService.logout();
+        this.router.navigate(['login'])
+      };
+    }
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
   }
 
   ngAfterContentChecked() {
     let userModel = JSON.parse(localStorage.getItem("userModel"));
     if (userModel !== null) {
-      if (userModel.userStatus == 'admin') this.isAdmin = true;
-      let user = <User>{ firstName: userModel.userFirstName, image: userModel.userAvatar };
+      if (userModel.status == 'admin') this.isAdmin = true;
+      let user = <User>{ firstName: userModel.firstName, image: userModel.image };
       this.userInfoService.announcedUserInfo(user);
 
       this.adminCheck.announcedisUserLoggedInAsAdmin(this.isAdmin)

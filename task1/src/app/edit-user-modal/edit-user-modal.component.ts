@@ -30,9 +30,9 @@ export class EditUserModalComponent implements OnInit {
       firstName: new FormControl(this.user.firstName),
       lastName: new FormControl(this.user.lastName),
       image: new FormControl(this.user.image),
-      id: new FormControl(this.user.id),
+      _id: new FormControl(this.user._id),
       email: new FormControl(this.user.email),
-      password: new FormControl(this.user.password)
+      unhashedPass: new FormControl(this.user.password)
     })
   }
 
@@ -41,11 +41,14 @@ export class EditUserModalComponent implements OnInit {
   }
 
   async editUser(user) {
+    console.log(user.value)
     this.httpReq.changeUserInfo(user.value).subscribe(res => {
-      this.httpReq.getAllUsers().subscribe((res:User[]) =>{
-        let dataSource = <any>res;
+      this.httpReq.getAllUsers().subscribe((res:any) => {
+        console.log(res);
+        
+        let dataSource = res.data;
         this.updateTable.announcedUsersTableUpdate(dataSource);
-      })      
+      })
       this.matDialogRef.close();
     })
   }

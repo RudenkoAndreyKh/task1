@@ -21,8 +21,8 @@ import { Extensions } from '../services/extensions.service';
 
 })
 export class HeaderComponent implements OnInit {
-  userFirstName = "";
-  userAvatar = '';
+  firstName = "";
+  image = '';
   shoppingCart = false;
   cartItem: CartItem[] = [];
   isLoggedIn = false;
@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     private cartUpdate: CartUpdateService,
     private headerService: HeaderService,
     private authService: AuthServiceService,
-    private ext:Extensions) {
+    private ext: Extensions) {
     this.headerService.isUserLoggedInAnnounced$.subscribe(
       isLoggedIn => {
         this.isLoggedIn = isLoggedIn;
@@ -55,11 +55,11 @@ export class HeaderComponent implements OnInit {
     return this.router.navigate(['login']);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.userInfo.userInfoAnnounced$.subscribe(
       (user: User) => {
-        this.userFirstName = user.firstName;
-        this.userAvatar = user.image;
+        this.firstName = user.firstName;
+        this.image = user.image;
       });
     this.adminCheck.isUserLoggedInAsAdminAnnounced$.subscribe(
       isAdmin => {
@@ -67,8 +67,20 @@ export class HeaderComponent implements OnInit {
       }
     )
 
-    if (localStorage.userStatus == 'admin') this.loggedAsAdmin = true;
-    this.adminCheck.announcedisUserLoggedInAsAdmin(this.loggedAsAdmin)
+    let tokenExpiresIn = localStorage.getItem("tokenExpiresIn")
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel !== null) {
+      if (userModel.status == 'admin') this.loggedAsAdmin = true;
+      this.adminCheck.announcedisUserLoggedInAsAdmin(this.loggedAsAdmin)
+    }
+
+    if (userModel) {
+      if (await this.authService.isTokenExpired(tokenExpiresIn)) this.authService.logout();
+      await this.authService.isLoggedIn(userModel).subscribe((res: any) => {
+        this.isLoggedIn = res.success;
+      })
+    }
+    this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
 
     if (localStorage.getItem('ShoppingCart') !== null) {
       this.cartItem = JSON.parse(localStorage.getItem('ShoppingCart'));
@@ -92,7 +104,11 @@ export class HeaderComponent implements OnInit {
   }
 
   goToItemDetails(id) {
-    return this.router.navigate([`game-details/${id}`]);
+    return this.router.navigate([`game-details/${id}`])
+      .then(() => {
+        console.log("next");
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+      });
   }
 
   deleteItem(item) {

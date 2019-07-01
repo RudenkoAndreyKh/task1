@@ -41,8 +41,8 @@ export class CreateNewItemModalComponent implements OnInit {
     this.addItemForm.value.image = this.imgResultAfterCompress;
     let item: Item = <Item>{name: newItem.value.name, description: newItem.value.description, price: newItem.value.price, image: newItem.value.image};
     this.httpReq.addItem(item).subscribe(res => {
-      this.httpReq.getAllGames().subscribe(res =>{
-        let dataSource: any = res;
+      this.httpReq.getAllGames().subscribe((res:any) =>{
+        let dataSource: any = res.data;
         this.updateTable.announcedTableUpdate(dataSource);
       })
       this.matDialogRef.close();

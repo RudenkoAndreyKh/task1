@@ -101,11 +101,11 @@ import { ErrorDialogComponent } from './interceptors/error-dialog.component';
     NgxImageCompressService,
     NotAuthGuard,
     ErrorDialogService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ParamInterceptor,
-      multi: true
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ParamInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent],
   entryComponents: [EditModalComponent, CreateNewItemModalComponent, EditUserModalComponent, ErrorDialogComponent]

@@ -17,7 +17,7 @@ export class DataTableComponent implements OnInit {
   @ViewChild(MatTable, { static: false }) table: MatTable<DataTableItem>;
 
   dataSource: DataTableDataSource;
-  displayedColumns = ['id', 'firstName', 'lastName', 'email', 'actions'];
+  displayedColumns = [ 'firstName', 'lastName', 'email', 'actions'];
 
   constructor(
     private authService: AuthServiceService,
@@ -29,10 +29,10 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.httpReq.getAllUsers()
-      .subscribe((res:any[]) => {
+      .subscribe((res:any) => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        this.dataSource.data = res;
+        this.dataSource.data = res.data;
         this.table.dataSource = this.dataSource;
       })
     this.dataSource = new DataTableDataSource();
@@ -43,11 +43,13 @@ export class DataTableComponent implements OnInit {
   }
 
   deleteUser(userId) {
+    console.log(userId);
+    
     this.authService.deleteUser(userId)
       .subscribe(() => {
         let dataSource = this.dataSource.data;
         for (let i = 0; i < dataSource.length; i++) {
-          if (dataSource[i].id == userId) {
+          if (dataSource[i]._id == userId) {
             dataSource.splice(i, 1);
             break;
           }

@@ -19,22 +19,14 @@ export class MainPageComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let isLoggedIn: boolean = false;
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      let data = res;
-      if (userModel !== null) {
-        let userEmail = userModel.userEmail;
-        data.filter(user => {
-          if (user.email == userEmail) {
-            isLoggedIn = true;
-          }
-        })
-      }
-      this.isLoggedIn = isLoggedIn;
-      this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-    })
-
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    if (userModel) {
+      await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+        console.log(res);
+        this.isLoggedIn = res.success;
+        this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
+      })
+    }
   }
 
 }

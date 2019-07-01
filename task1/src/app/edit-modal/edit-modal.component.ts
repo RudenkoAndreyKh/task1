@@ -40,9 +40,8 @@ export class EditModalComponent implements OnInit {
     this.editItemForm.value.image = this.imgResultAfterCompress;
     let itemModel: Item = <Item>{ name: item.value.name, description: item.value.description, price: item.value.price, image: item.value.image };
     await this.httpReq.editItem(itemModel, id).subscribe(() => {
-      this.httpReq.getAllGames().subscribe(res => {
-        let dataSource:any = res;
-        console.log(dataSource, res);
+      this.httpReq.getAllGames().subscribe((res:any) => {
+        let dataSource:any = res.data;
         this.updateTable.announcedTableUpdate(dataSource);
       })
       

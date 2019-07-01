@@ -32,43 +32,32 @@ export class LoginPageComponent implements OnInit {
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     })
-
-    await this.authService.isLoggedIn().subscribe((res: User[]) => {
-      let isLoggedIn: boolean = false;
-      let userModel = JSON.parse(localStorage.getItem("userModel"));
-      let data = res;
-      if (userModel !== null) {
-        let userEmail = userModel.userEmail;
-        data.filter(user => {
-          if (user.email == userEmail) {
-            isLoggedIn = true;
-          }
-        })
+    let userModel = JSON.parse(localStorage.getItem("userModel"));
+    console.log(userModel)
+    if (userModel) {
+      await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+        this.isLoggedIn = res.success;
+      })
+      if (this.isLoggedIn) {
+        this.router.navigate(['']);
       }
-      this.isLoggedIn = isLoggedIn;
-    })
-    if (this.isLoggedIn) {
-      this.router.navigate(['']);
     }
   }
 
   login() {
-    this.authService.login()
-      .subscribe((res: User[]) => {
-        let data = res;
-        data.map((user:any) => {
-          if (user.email == this.loginForm.controls.email.value && user.password == this.loginForm.controls.password.value) {
-            if (user.status != undefined) this.headerService.announcedisNotLoggedInUser(true);
-            this.headerService.announcedisNotLoggedInUser(!this.isNotLoggedInUser);
-            this.isLoggedIn = true;
-            let userModel = { userEmail: user.email, userFirstName: user.firstName, userLastName: user.lastName, userAvatar: user.image, userStatus: user.status };
+    let userModel = <User>({ email: this.loginForm.value.email, password: this.loginForm.value.password })
+    this.authService.login(userModel)
+      .subscribe((res: any) => {
+        if (res.data.user.success === true) this.headerService.announcedisUserLoggedIn(true);
+        if (res.data.user.status === 'admin') this.adminCheck.announcedisUserLoggedInAsAdmin(true);
+        this.router.navigate([''])
+          .then(() => {
+            let userModel = { email: res.data.user.email, firstName: res.data.user.firstName, lastName: res.data.user.lastName, image: res.data.user.image, status: res.data.user.status };
             localStorage.setItem('userModel', JSON.stringify(userModel));
-            if (localStorage.userModel.userStatus === 'admin') this.adminCheck.announcedisUserLoggedInAsAdmin(true);
-            this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
-            this.router.navigate(['']);
-            return;
-          };
-        })
+            localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
+            localStorage.setItem('tokenExpiresIn', JSON.stringify(res.data.tokenExpiresIn));
+          });
+
       })
   }
 

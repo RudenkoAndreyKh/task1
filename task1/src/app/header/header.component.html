@@ -12,7 +12,8 @@
       </li>
 
       <li *ngIf="!isLoggedIn" class="nav-item greetingLayout">
-        <a class="nav-link" routerLink="/registration">Sing up</a>
+          <a class="nav-link" routerLink="/login">Sign In</a>
+        <a class="nav-link signUp" routerLink="/registration">Sing Up</a>
       </li>
 
       <div *ngIf="isLoggedIn" class="greetingLayout">
@@ -22,7 +23,7 @@
           <div class="shoppingCart" *ngIf="shoppingCart">
             <ul>
               <li class="listElement" *ngFor="let cartItem of cartItem">
-                <div class="listEl" (click)="goToItemDetails(cartItem.id);">{{cartItem.name | descriptionsize : 15}} <span
+                <div class="listEl" (click)="goToItemDetails(cartItem._id);">{{cartItem.name | descriptionsize : 15}} <span
                     class="badge badge-secondary">{{cartItem.quantity}}</span> <span class="priceAndDelete">Price:
                     {{cartItem.price*cartItem.quantity+' $'}} <button (click)="deleteItem(cartItem); $event.stopPropagation();"
                       class="deleteItem"><i class="fas fa-times"></i></button></span> </div>
@@ -35,10 +36,10 @@
           </div>
         </li>
         <li class="nav-item userGreeting">
-          <div (click)="openUserInfo();" class="userAvatar">
-            <img src="{{userAvatar}}" alt="Avatar">
+          <div (click)="openUserInfo();" class="image">
+            <img src="{{image}}" alt="Avatar">
           </div>
-          <span class="nav-link ">Hello, {{userFirstName}}</span>
+          <span class="nav-link ">Hello, {{firstName}}</span>
         </li>
         <li class="nav-item">
           <a class="nav-link logout" (click)="logout();">Logout</a>

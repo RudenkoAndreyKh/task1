@@ -11,7 +11,7 @@ export interface DataTableItem {
   firstName: string;
   lastName: string;
   password: string;
-  id: number;
+  _id: number;
 }
 
 // TODO: replace this with real data from your application
@@ -90,7 +90,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> implements On
         case 'lastName': return compare(a.lastName, b.lastName, isAsc);
         case 'email': return compare(a.email, b.email, isAsc);
         case 'password': return compare(a.password, b.password, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'id': return compare(+a._id, +b._id, isAsc);
         default: return 0;
       }
     });

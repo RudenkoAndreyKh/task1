@@ -47,9 +47,9 @@ export class StoreListComponent implements OnInit {
       }
     )
     await this.httpReq.getAllGames()
-      .subscribe((res: Item[]) => {
-        this.items = res;
-        this.data = res;
+      .subscribe((res: any) => {
+        this.items = res.data;
+        this.data = res.data;
       })
     this.searchItems.valueChanges
       .pipe(
@@ -109,7 +109,7 @@ export class StoreListComponent implements OnInit {
   }
 
   goToGameDetails(item) {
-    this.router.navigate([`/game-details/${item.id}`])
+    this.router.navigate([`/game-details/${item._id}`])
     .then(() =>{
       console.log("next");
       this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
