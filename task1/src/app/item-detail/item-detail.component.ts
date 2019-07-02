@@ -48,11 +48,12 @@ export class ItemDetailComponent implements OnInit {
       this.item = res.data;
       this.isSpinnerRun = false;
     })
+    let accessToken = localStorage.getItem('accessToken');
     let tokenExpiresIn = localStorage.getItem("tokenExpiresIn")
     let userModel = JSON.parse(localStorage.getItem("userModel"));
     if (userModel) {
       if (await this.authService.isTokenExpired(tokenExpiresIn)) this.authService.logout();
-      await this.authService.isLoggedIn(userModel).subscribe((res: any) => {
+      await this.authService.isLoggedIn(userModel, accessToken).subscribe((res: any) => {
         this.isLoggedIn = res.success;
       })
     }

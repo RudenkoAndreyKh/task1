@@ -19,9 +19,10 @@ export class MainPageComponent implements OnInit {
   }
 
   async ngOnInit() {
+    let accessToken = localStorage.getItem('accessToken');
     let userModel = JSON.parse(localStorage.getItem("userModel"));
     if (userModel) {
-      await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+      await this.authService.isLoggedIn(userModel, accessToken).subscribe((res:any) => {
         console.log(res);
         this.isLoggedIn = res.success;
         this.headerService.announcedisUserLoggedIn(this.isLoggedIn);

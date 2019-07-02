@@ -28,9 +28,10 @@ export class AuthPageComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)])
     })
+    let accessToken = localStorage.getItem('accessToken');
     let userModel = JSON.parse(localStorage.getItem("userModel"));
     if (userModel) {
-      await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+      await this.authService.isLoggedIn(userModel, accessToken).subscribe((res:any) => {
         console.log(res);
         
         this.isLoggedIn = res.success;

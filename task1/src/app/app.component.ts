@@ -35,10 +35,11 @@ export class AppComponent implements OnInit, AfterContentChecked {
       (isNotLoggedInUser) => {
         this.isNotLoggedInUser = isNotLoggedInUser;
       });
-    let tokenExpiresIn = localStorage.getItem("tokenExpiresIn")
+    let accessToken = localStorage.getItem('accessToken');
+    let tokenExpiresIn = localStorage.getItem("tokenExpiresIn");
     let userModel = JSON.parse(localStorage.getItem("userModel"));
     if (userModel) {
-      await this.authService.isLoggedIn(userModel).subscribe((res: any) => {
+      await this.authService.isLoggedIn(userModel, accessToken).subscribe((res: any) => {
         this.isLoggedIn = res.success;
         this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
       })

@@ -67,8 +67,10 @@ export class StoreListComponent implements OnInit {
           )
         )
       )
-      .subscribe(res => {
-        let data = <any>res;
+      .subscribe((res:any) => {
+        console.log(res);
+        
+        let data = <any>res.data;
         for (let i = 0; i < data.length; i++) {
           if (data[i].name.toLowerCase().includes(this.searchItems.value)) {
             this.filteredItems.push(data[i]);

@@ -37,6 +37,7 @@ export class UserInfoPageComponent implements OnInit {
 
   async ngOnInit() {
     let userModel = JSON.parse(localStorage.getItem("userModel"));
+    let accessToken = localStorage.getItem('accessToken');
     this.userChangeForm = new FormGroup({
       email: new FormControl(userModel.email, [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -47,7 +48,7 @@ export class UserInfoPageComponent implements OnInit {
 
 
     if (userModel) {
-      await this.authService.isLoggedIn(userModel).subscribe((res: any) => {
+      await this.authService.isLoggedIn(userModel, accessToken).subscribe((res: any) => {
         this.isLoggedIn = res.success;
         this.headerService.announcedisUserLoggedIn(this.isLoggedIn);
       })

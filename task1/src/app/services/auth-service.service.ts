@@ -19,8 +19,8 @@ export class AuthServiceService {
     return this.http.post(environment.domain + `/auth/sign-in`, userModel);
   }
 
-  isLoggedIn(userModel) {
-    return this.http.post<any>(environment.domain + `/auth/is-logged-in`, userModel);
+  isLoggedIn(userModel, accessToken) {
+    return this.http.post<any>(environment.domain + `/auth/is-logged-in`, {userModel, accessToken});
   }
 
   isTokenExpired(tokenExpiresIn) {

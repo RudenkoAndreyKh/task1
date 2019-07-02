@@ -33,9 +33,9 @@ export class LoginPageComponent implements OnInit {
       password: new FormControl('', Validators.required)
     })
     let userModel = JSON.parse(localStorage.getItem("userModel"));
-    console.log(userModel)
+    let accessToken = localStorage.getItem('accessToken');
     if (userModel) {
-      await this.authService.isLoggedIn(userModel).subscribe((res:any) => {
+      await this.authService.isLoggedIn(userModel, accessToken).subscribe((res:any) => {
         this.isLoggedIn = res.success;
       })
       if (this.isLoggedIn) {
